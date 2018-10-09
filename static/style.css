@@ -1,3 +1,7 @@
+* {
+    /* This makes all elements width and height be inclusive of their margin and padding */
+    box-sizing: border-box;
+}
 body{
     margin: 0;
     padding: 0;
