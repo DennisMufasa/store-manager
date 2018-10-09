@@ -36,12 +36,14 @@ header nav ul li{
     display: inline;
     margin: 3px;
     padding: 3px;
+    background: white;
+    padding-top: 10px;
 }
 /* body styling */
 main{
     height: 500px;
-    color: #234968;
-    font-size: 1.5vmax;
+    color: white;
+    font-size: 1.7vmax;
 }
 #main-content{
     position: relative;
@@ -63,20 +65,23 @@ form label input{
     text-align: center;
     margin: 15px 15px 15px 15px;
     height: 25px;
-    border-radius: 15%;
+    border-radius: 10%;
+    font-size: 1.3vmax;
 }
 #submit{
     background: #234968;
-    color: #7bb3e0;
-    height: 30px;
+    color: white;
+    height: 40px;
     width: 60px;
+    margin-left: 50px;
+    font-size: 1.3vmax;
 }
 /* footer styling */
 footer{
     background: #234968;
     width: 100%;
     height: 100%;
-    color: #7bb3e0;
+    color: white;
 }
 footer div{
     margin: 15px 15px 15px 15px;

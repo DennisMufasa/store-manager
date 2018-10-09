@@ -15,10 +15,10 @@
             <img id="logo" src="../static/img/logo.png" alt="logo">
             <nav>
                 <ul>
-                        <li><a href="#"><img src="../static/img/home.png" alt="home"></a></li>
-                        <li><a href="#"><img src="../static/img/profile.png" alt="profile"></a></li>
-                        <li><a href="#"><img src="../static/img/info.png" alt="info"></a></li>
-                        <li><a href="#"><img src="../static/img/logout.png" alt="logout"></a></li>
+                        <li id="home"><a href="#"><img src="../static/img/home.png" alt="home"></a></li>
+                        <li id="profile"><a href="#"><img src="../static/img/profile.png" alt="profile"></a></li>
+                        <li id="info"><a href="#"><img src="../static/img/info.png" alt="info"></a></li>
+                        <li id="logout"><a href="#"><img src="../static/img/logout.png" alt="logout"></a></li>
                 </ul>
             </nav>
         </div>
@@ -27,15 +27,15 @@
         <div id="main-content" class="container">
             <form action="">
                 <label for="username">Username:
-                    <input type="text" name="username" placeholder="username" id="username" required>
+                    <input type="text" name="username" id="username" required>
                 </label>
                 <br>
                 <label for="password">Password:
-                    <input type="password" name="password"placeholder="password" id="password" required>
+                    <input type="password" name="password" id="password" required>
                 </label>
                 <br>
                 <label for="submit">
-                    <input id="submit" type="submit" name="submit" placeholder="login">
+                    <input id="submit" type="submit" name="submit" value="login">
                 </label>
                 
             </form>
@@ -58,5 +58,6 @@
             </div>
     </div>
     </footer>
+    <script src="../static/custom.js"></script>
 </body>
 </html>
