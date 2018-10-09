@@ -19,21 +19,24 @@ header{
 #header-content{
     display: flex;
 }
+#img-container{
+    width: 70%;
+}
 #logo{
     height: 100px;
     width: 200px;
+    padding-left: 40px;
 }
 header nav{
     margin: auto;
 }
 header nav ul{
     padding: 0;
-    float: right;
-    margin-left: 750px;
+    /* float: right; */
 }
 header nav ul li{
     list-style: none;
-    display: inline;
+    display: inline-block;
     margin: 3px;
     padding: 3px;
     background: white;
@@ -41,7 +44,7 @@ header nav ul li{
 }
 /* body styling */
 main{
-    height: 500px;
+    height: 600px;
     color: white;
     font-size: 1.7vmax;
 }
@@ -82,17 +85,16 @@ footer{
     width: 100%;
     height: 100%;
     color: white;
+    position: relative;
 }
-footer div{
-    margin: 15px 15px 15px 15px;
-    padding-left: 330px;
-    overflow: hidden;
-}
-#copy{
-    margin-left: 15px;
+footer .container{
+    text-align: center;
 }
 footer ul{
-    margin-left: -60px;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    height: 50%;
 }
 footer ul li{
     list-style: none;
@@ -102,7 +104,7 @@ footer ul li{
 .fa{
  width: 25px;
  padding: 5px;
- margin: 3px 3px;
+ margin: 3px;
  text-align: center;
  text-decoration: none;
 }
