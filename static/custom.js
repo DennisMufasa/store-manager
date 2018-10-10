@@ -31,3 +31,14 @@ logout.addEventListener("mouseover", ()=>{
 logout.addEventListener("mouseout", ()=>{
     logout.style.background = "white"
 })
+// JS for homepage side navbar
+let sidenav = document.querySelector(".sidenav")
+let toggle = document.querySelector(".toggle")
+openNav = ()=>{
+    sidenav.style.width = "300px"
+    toggle.style.marginLeft = "300px"
+}
+closeNav = ()=>{
+    sidenav.style.width = "0"
+    toggle.style.marginLeft = "0"
+}

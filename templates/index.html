@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../static/style.css">
     <title>home</title>
 </head>
-<body>
+<body id="body">
     <header>
         <div id="header-content" class="container">
             <div id="img-container"><img id="logo" src="../static/img/logo.png" alt="logo"></div>
@@ -23,36 +23,203 @@
             </nav>
         </div>
     </header>
+    <div class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="">Checkout</a>
+            <a href="">Categories</a>
+            <a href="">Inventory</a>
+            <a href="">Management</a>
+    </div>
+    <div id="toolbar" class="container">
+        <span class="toggle" onclick="openNav()">&#9776; Menu</span>
+        <form class="search">
+            <input type="text" placeholder="search">
+            <button type="submit"><span class="fa fa-search"></span></button>
+        </form>    
+    </div>
     <main>
         <div class="container">
-        <div class="slide-show">
-                <div class="slide">
-                    <img src="" alt="slide1">
+            <div class="square-container" style="overflow-y: scroll;">
+                <div id="item1" class="square">
+                    <img src="https://images.unsplash.com/photo-1518908336710-4e1cf821d3d1?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c696297624f5a4f66c3f93364b7bd70e&auto=format&fit=crop&w=1173&q=80" alt="ps4" width="65%;">
+                    <div class="details">
+                        <p>Category - Electronics</p>
+                        <p>Items - Playstation 4</p>
+                        <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                        <p>Unit cost - Ksh 40,000</p>
+                        <button><span class="fa fa-shopping-cart"></span></button>
+                    </div>
                 </div>
-                <div class="slide">
-                    <img src="" alt="slide2">
+                <div id="item2" class="square">
+                    <img src="https://images.unsplash.com/photo-1518604666860-9ed391f76460?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=373681663c8faf94e54ef56313a12dc5&auto=format&fit=crop&w=1050&q=80" alt="footbals" width="65%;">
+                    <div class="details">
+                        <p>Category - Sports</p>
+                        <p>Item - soccer ball</p>
+                        <input type="number" name="qty" placeholder="QTY" width="35%;">
+                        <p>Unit cost - Ksh 5,000</p>
+                        <button><span class="fa fa-shopping-cart"></span></button>
+                    </div>
                 </div>
-                <div class="slide">
-                    <img src="" alt="slide3">
+                <div id="item3" class="square">
+                    <img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=aa39eb64c788af8a1213b9abac5b2207&auto=format&fit=crop&w=979&q=80" alt="arm chair" width="65%;">
+                    <div class="details">
+                            <p>Category - Furniture</p>
+                            <p>Items - Arm chair</p>
+                            <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                            <p>Unit cost - Ksh 10,000</p>
+                            <button><span class="fa fa-shopping-cart"></span></button>
+                        </div>
                 </div>
-                <div class="slide">
-                    <img src="" alt="slide4">
+                <div id="item4" class="square">
+                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89e5fd826f8bdc563ab1743608690f39&auto=format&fit=crop&w=800&q=80" alt="arm chair" width="65%;">
+                        <div class="details">
+                                <p>Category - Electronics</p>
+                                <p>Items - i phone X</p>
+                                <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                                <p>Unit cost - Ksh 99,000</p>
+                                <button><span class="fa fa-shopping-cart"></span></button>
+                            </div>
                 </div>
-            </div>
-            <div class="sidenav">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#9776;</a>
-                <a href="">Checkout</a>
-                <a href="">Categories</a>
-                <a href="">Inventory</a>
-                <a href="">Management</a>
-            </div>
-            <div class="square-container">
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
+                <div id="item5" class="square">
+                    <img src="https://images.unsplash.com/photo-1494173853739-c21f58b16055?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f9023686d61271902f4dca0cda6b1cb1&auto=format&fit=crop&w=701&q=80" alt="" width="65%;">
+                    <div class="details">
+                            <p>Category - Electronics</p>
+                            <p>Items - Desktop</p>
+                            <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                            <p>Unit cost - Ksh 140,000</p>
+                            <button><span class="fa fa-shopping-cart"></span></button>
+                        </div>
+                </div>
+                <div id="item6" class="square">
+                        <img src="https://images.unsplash.com/photo-1524061614234-8449637d36ce?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f86f1d40cd6242f8e054bd042f1182fc&auto=format&fit=crop&w=967&q=80" alt="" width="65%;">
+                        <div class="details">
+                                <p>Category - Furniture</p>
+                                <p>Items - Bed</p>
+                                <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                                <p>Unit cost - Ksh 55,000</p>
+                                <button><span class="fa fa-shopping-cart"></span></button>
+                            </div>
+                </div>
+                <div id="item7" class="square">
+                        <img src="https://images.unsplash.com/photo-1514348871858-1d3c20902571?ixlib=rb-0.3.5&s=afcc1dea6791c7bf0c5f81bc1f3a7ff5&auto=format&fit=crop&w=967&q=80" alt="" width="65%;">
+                        <div class="details">
+                                <p>Category - Beauty</p>
+                                <p>Items - Chanel</p>
+                                <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                                <p>Unit cost - Ksh 15,000</p>
+                                <button><span class="fa fa-shopping-cart"></span></button>
+                            </div>
+                </div>
+                <div id="item8" class="square">
+                        <img src="https://images.unsplash.com/photo-1520605728164-b6a5c6814203?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b0adbe0c149ee138d59e510bf278c32e&auto=format&fit=crop&w=1060&q=80" alt="" width="65%;">
+                        <div class="details">
+                                <p>Category - Furniture</p>
+                                <p>Items - couch set</p>
+                                <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                                <p>Unit cost - Ksh250,000</p>
+                                <button><span class="fa fa-shopping-cart"></span></button>
+                            </div>
+                </div>
+                <div id="item9" class="square">
+                        <img src="https://images.unsplash.com/photo-1526045431048-f857369baa09?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=04d392a786d723906ad4cadf15ce91c3&auto=format&fit=crop&w=500&q=60" alt="" width="65%;">
+                        <div class="details">
+                                <p>Category - Accessories</p>
+                                <p>Items - watch</p>
+                                <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                                <p>Unit cost - Ksh 5,000</p>
+                                <button><span class="fa fa-shopping-cart"></span></button>
+                            </div>
+                </div>
+                <div id="item10" class="square">
+                    <img src="https://images.unsplash.com/photo-1514585244145-1847f938a1df?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=be19c753b9f168a3b7de1a41cdd8170e&auto=format&fit=crop&w=1093&q=80" alt="https://images.unsplash.com/photo-1536273830236-c825e8ee283f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9c139a1b3e9622531120e55a4742e77d&auto=format&fit=crop&w=1051&q=80" width="65%;">
+                    <div class="details">
+                            <p>Category - Jewelery</p>
+                            <p>Items - Rings</p>
+                            <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                            <p>Unit cost - Ksh 1,000</p>
+                            <button><span class="fa fa-shopping-cart"></span></button>
+                        </div>
+                </div>
+                <div id="item11" class="square">
+                    <img src="https://images.unsplash.com/photo-1518893883800-45cd0954574b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bb78101cf8b30fd7fb1389bec67a5d53&auto=format&fit=crop&w=674&q=80" alt="" width="65%;">
+                    <div class="details">
+                            <p>Category - Antique</p>
+                            <p>Items - phonograph</p>
+                            <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                            <p>Unit cost - Ksh 28,000</p>
+                            <button><span class="fa fa-shopping-cart"></span></button>
+                        </div>
+                </div>
+                <div id="item12" class="square">
+                    <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9fc409d72ac99c1a6d2590c883ed2f62&auto=format&fit=crop&w=1050&q=80" alt="" width="65%;">
+                    <div class="details">
+                            <p>Category - Furniture</p>
+                            <p>Items - Couch</p>
+                            <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                            <p>Unit cost - Ksh 80,000</p>
+                            <button><span class="fa fa-shopping-cart"></span></button>
+                        </div>
+                </div>
+                <div id="item13" class="square">
+                    <img src="https://images.unsplash.com/photo-1534797207621-0af420f6c01b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=409cfc428b4698be5337abf7c21bfc13&auto=format&fit=crop&w=1050&q=80" alt="" width="65%;">
+                    <div class="details">
+                        <p>Category - Antiques</p>
+                        <p>Items - chandelier</p>
+                        <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                        <p>Unit cost - Ksh 20,000</p>
+                        <button><span class="fa fa-shopping-cart"></span></button>
+                    </div>
+                </div>
+                <div id="item14" class="square">
+                    <img src="https://images.unsplash.com/photo-1481207801830-97f0f9a1337e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=be08aede38d12b6e061a1c1a32cc173f&auto=format&fit=crop&w=1050&q=80" alt="" width="65%;">
+                    <div class="details">
+                        <p>Category - Electronics</p>
+                        <p>Items - Headphones</p>
+                        <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                        <p>Unit cost - Ksh 4000</p>
+                        <button><span class="fa fa-shopping-cart"></span></button>
+                    </div>
+                </div>
+                <div id="item15" class="square">
+                    <img src="https://images.unsplash.com/photo-1527888477750-6fd34fbfa3f0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1281d44b3c626804128832a149cd74ea&auto=format&fit=crop&w=1051&q=80" alt="" width="65%;">
+                    <div class="details">
+                        <p>Category - Electronics</p>
+                        <p>Items - Camera</p>
+                        <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                        <p>Unit cost - Ksh 60,000</p>
+                        <button><span class="fa fa-shopping-cart"></span></button>
+                    </div>
+                </div>
+                <div id="item16" class="square">
+                    <img src="https://images.unsplash.com/photo-1525936780269-af4851e9c4df?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3149a0d369a5b8e0c989af160ecb551c&auto=format&fit=crop&w=634&q=80" alt="" width="65%;">
+                    <div class="details">
+                        <p>Category - Decor</p>
+                        <p>Items - chandelier</p>
+                        <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                        <p>Unit cost - Ksh 140,000</p>
+                        <button><span class="fa fa-shopping-cart"></span></button>
+                    </div>
+                </div>
+                <div id="item17" class="square">
+                    <img src="https://images.unsplash.com/photo-1484144709249-a643e3720d13?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09a47f6cde9a3102a94b4e7d5b90b420&auto=format&fit=crop&w=1090&q=80" alt="" width="65%;">
+                    <div class="details">
+                        <p>Category - Sports</p>
+                        <p>Items - bicycle</p>
+                        <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                        <p>Unit cost - Ksh 25,000</p>
+                        <button><span class="fa fa-shopping-cart"></span></button>
+                    </div>
+                </div>
+                <div id="item18" class="square">
+                    <img src="https://images.unsplash.com/photo-1534997587459-5b3358b2df45?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1e3dadd3be14b329a92fafe3ab5967ee&auto=format&fit=crop&w=1050&q=80" alt="" width="65%;">
+                    <div class="details">
+                        <p>Category - Vehicles</p>
+                        <p>Items - Black rims</p>
+                        <input type="number" name="qty" id="qty" placeholder="QTY" width="50px;">
+                        <p>Unit cost - Ksh 35,000</p>
+                        <button><span class="fa fa-shopping-cart"></span></button>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -67,7 +234,7 @@
                     <li><a href="#" class="fa fa-skype"></a></li>
                 </ul>
             </div>
-    </div>
+        </div>
     </footer>
     <script src="../static/custom.js"></script>
 </body>
