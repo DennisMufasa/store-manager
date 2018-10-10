@@ -108,10 +108,10 @@ span{
     font-size: 15px;
 }
 #toolbar form.search button{
-    background: #234968;
+    background: white;
 }
 #toolbar form.search button:hover{
-    background: #65849e;
+    background: #234968;
 }
 /* styling for the item divs */
 .square-container{
@@ -139,8 +139,10 @@ span{
     width: 80px;
 }
 .details button{
-    margin-left: 30%;
-    margin-top: 20px;
+ background: white; 
+}
+.details button:hover{
+    background: #234968;
 }
 /* footer styling */
 footer{
