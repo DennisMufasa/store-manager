@@ -46,6 +46,9 @@ header nav ul li{
     background: white;
     padding-top: 10px;
 }
+header nav ul li:hover{
+    background: #65849e;
+}
 /* body styling */
 main{
     height: 530px;
