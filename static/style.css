@@ -1,3 +1,7 @@
+* {
+    /* This makes all elements width and height be inclusive of their margin and padding */
+    box-sizing: border-box;
+}
 body{
     margin: 0;
     padding: 0;
@@ -8,7 +12,7 @@ body{
 }
 .container{
     margin: 0 auto;
-    width: 80%;
+    width: 75%;
     height: 100%;
 }
 /* header styling */
@@ -19,73 +23,50 @@ header{
 #header-content{
     display: flex;
 }
+#img-container{
+    width: 70%;
+}
 #logo{
     height: 100px;
     width: 200px;
+    padding-left: 40px;
 }
 header nav{
     margin: auto;
 }
 header nav ul{
     padding: 0;
-    float: right;
-    margin-left: 560px;
+    /* float: right; */
 }
 header nav ul li{
     list-style: none;
-    display: inline;
+    display: inline-block;
     margin: 3px;
     padding: 3px;
+    background: white;
+    padding-top: 10px;
 }
 /* body styling */
 main{
-    height: 500px;
-    color: #234968;
-    font-size: 1.5vmax;
+    height: 600px;
+    color: white;
+    font-size: 1.7vmax;
 }
-#main-content{
-    position: relative;
-}
-form{
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: 50%;
-    transform: translate(-50%, -50%);
-}
-form label{
-    width: 100%;
-    margin: 200px 200px 200px 200px;
-}
-form label input{
-    width: 500px;
-    text-align: center;
-    margin: 15px 15px 15px 15px;
-}
-#submit{
-    background: #234968;
-    color: #7bb3e0;
-    height: 30px;
-    width: 60px;
-}
-/* footer styling */
 footer{
     background: #234968;
     width: 100%;
     height: 100%;
-    color: #7bb3e0;
+    color: white;
+    position: relative;
 }
-footer div{
-    margin: 15px 15px 15px 15px;
-    padding-left: 305px;
-    overflow: hidden;
-}
-#copy{
-    margin-left: 15px;
+footer .container{
+    text-align: center;
 }
 footer ul{
-    margin-left: -60px;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    height: 50%;
 }
 footer ul li{
     list-style: none;
@@ -95,7 +76,7 @@ footer ul li{
 .fa{
  width: 25px;
  padding: 5px;
- margin: 3px 3px;
+ margin: 3px;
  text-align: center;
  text-decoration: none;
 }
