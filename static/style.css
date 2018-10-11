@@ -55,6 +55,26 @@ main{
     color: white;
     font-size: 1.7vmax;
 }
+.container .profile{
+    width: 100%;
+    height: 500px;
+    display: flex;
+    padding: 5px 5px 5px 5px;
+    margin-top: 30px;
+    border: #234968 solid 2px;
+    overflow: hidden;
+}
+table, th, td{
+    padding: 5px 5px 5px 5px;
+}
+.link{
+    text-decoration: none;
+    color:white;
+}
+.link:hover{
+    color: #234968;
+}
+/* footer styling */
 footer{
     background: #234968;
     width: 100%;
