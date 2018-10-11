@@ -55,6 +55,35 @@ main{
     color: white;
     font-size: 1.7vmax;
 }
+.table-holder{
+    overflow-y: scroll;
+    height: 500px;
+}
+.history{
+    width: 900px;
+    margin-top: 20px;
+    margin-left: 50px;
+}
+table, th, td{
+    border: 2px solid #234968;
+    border-collapse: collapse;
+}
+th, td{
+    width: 150px;
+    line-height: 70px;
+}
+th{
+    height: 50px;
+}
+td{
+    text-align: center;
+}
+.container .back{
+    background: #234968;
+    width: 100px;
+    margin-left: 50px;
+}
+/* Footer styling */
 footer{
     background: #234968;
     width: 100%;
