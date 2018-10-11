@@ -24,6 +24,36 @@
         </div>
     </header>
     <main>
+            <div class="container">
+                    <div class="signup">
+                        <form action="">
+                            <label for="category">Product Category: <br>
+                                <select name="category" id="category">
+                                    <option value="">Electronics</option>
+                                    <option value="">Furniture</option>
+                                    <option value="">Sports</option>
+                                    <option value="">Jewelery</option>
+                                    <option value="">Antiques</option>
+                                    <option value="">Accessories</option>
+                                </select>
+                            </label><br>
+                            <label for="name">Product Name:
+                                <input type="text" name="product_name" id="name" placeholder="e.g. watch">
+                            </label><br>
+                            <label for="description">Product Description:
+                                <textarea name="description" id="description" cols="60" rows="4"></textarea>
+                            </label><br>
+                            <label for="qty">Product Quantity:
+                                <input type="number" name="qty" id="qty" placeholder="number of units">
+                            </label><br>
+                            <label for="cost">Unit Cost:
+                                <input type="number" name="cost" id="cost" placeholder="cost per unit">
+                            </label><br>
+                            <button class="discard"><span class="fa fa-times"></span></button>
+                            <button type="submit" class="save"><span class="fa fa-check"></span></button>
+                        </form>
+                    </div>
+                </div>
         
     </main>
     <footer>
