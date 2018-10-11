@@ -24,7 +24,31 @@
         </div>
     </header>
     <main>
-        
+        <div class="container">
+            <div class="signup">
+                <form action="">
+                    <label for="fname">Full Name:
+                        <input type="text" name="fname" id="fname" placeholder="e.g. John Oliver">
+                    </label><br>
+                    <label for="email">Email:
+                        <input type="email" name="email" id="email" placeholder="e.g. name@email.com">
+                    </label><br>
+                    <label for="idnumber">ID_number:
+                        <input type="number" name="idnumber" id="idnumber" placeholder="e.g. 12345678">
+                    </label><br>
+                    <label for="password">Password:
+                        <input type="password" name="password" id="password" placeholder="pick a password">
+                    </label><br>
+                    <label for="repass">Re-enter password:
+                        <input type="password" name="repass" id="repass" placeholder="enter password again">
+                    </label><br>
+                    <input style="margin-left: 150px;" type="radio" name="role">Admin
+                    <input type="radio" name="role">Attendant<br>
+                    <button class="discard"><span class="fa fa-times"></span></button>
+                    <button type="submit" class="save"><span class="fa fa-check"></span></button>
+                </form>
+            </div>
+        </div>
     </main>
     <footer>
         <div class="container">
