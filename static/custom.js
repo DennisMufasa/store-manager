@@ -1,9 +1,9 @@
 //select elements
 let sidenav = document.querySelector(".sidenav")
-let main = document.querySelector(".toggle")
+let main = document.querySelector("main")
 
 open_nav = ()=>{
-    sidenav.style.width = "280px"
+    sidenav.style.width = "250px"
     main.style.marginLeft = "280px"
 }
 close_nav = ()=>{
