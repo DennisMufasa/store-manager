@@ -51,7 +51,7 @@ header nav ul li:hover{
 }
 /* body styling */
 main{
-    height: 600px;
+    height: 100%;
     color: white;
     font-size: 1.7vmax;
 }
@@ -63,11 +63,13 @@ main{
     width: 300px;
 }
 .search button{
+    background: white;
+}
+.search button:hover{
     background: #234968;
 }
-.table-holder{
-    overflow-y: scroll; 
-    height: 500px;
+.table-holder{ 
+    height: 100%;
 }
 .inventory{
     width: 900px;
