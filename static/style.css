@@ -51,13 +51,12 @@ header nav ul li:hover{
 }
 /* body styling */
 main{
-    height: 600px;
+    height: 100%;
     color: white;
     font-size: 1.7vmax;
 }
 .table-holder{
-    overflow-y: scroll;
-    height: 500px;
+    height: 100%;
 }
 .sales{
     width: 900px;
