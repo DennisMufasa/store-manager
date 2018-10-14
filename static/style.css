@@ -188,17 +188,17 @@ span{
     margin-top: 20px;
     margin-left: 100px; 
 }
-table, th, td{
+.sales,.sales th,.sales td{
     border: 2px solid #234968;
     border-collapse: collapse;
 }
-th, td{
+.sales th, .sales td{
     width: 180px;
 }
-th{
+.sales th{
     height: 50px;
 }
-td{
+.sales td{
     text-align: center;
 }
 .sales .delete{
@@ -219,7 +219,30 @@ td{
 .container .back:hover{
     background: #234968;
 }
-/* footer styling */
+.history{
+    width: 900px;
+    margin-top: 20px;
+    margin-left: 50px;
+}
+.histroy th, .history td{
+    width: 150px;
+    line-height: 70px;
+}
+.history th{
+    height: 50px;
+}
+.history td{
+    text-align: center;
+}
+.container .back{
+    background: white;
+    width: 100px;
+    margin-left: 50px;
+}
+.container .back:hover{
+    background: #234968;
+}
+/* Footer styling */
 footer{
     background: #234968;
     width: 100%;
