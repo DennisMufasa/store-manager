@@ -113,6 +113,7 @@ form label input{
 .toggle{    
     color: white;
     width: 20%;
+    margin-left: 0 !important;
 }
 span{
     cursor: pointer;
@@ -331,6 +332,49 @@ span{
 }
 .holder .employee .delete{
     background: red;
+}
+.container .signup{
+    position: relative;
+    height: 550px;
+    width: 100%;
+    margin: 5px 5px 5px 5px;
+}
+.signup form{
+    margin: 0;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    margin-right: 50%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+}
+.signup form label{
+    width: 100%;
+    margin: 200px 200px 200px 200px;
+}
+.signup form label input , #category{
+    width: 500px;
+    text-align: center;
+    margin: 15px 15px 15px 15px;
+    height: 25px;
+    border-radius: 10%;
+    font-size: 1.3vmax;
+}
+.signup form .discard{
+    margin-top: 20px;
+    margin-left: 200px;
+    background: red;
+}
+.signup form .save{
+    margin-left: 20px;
+    background: green;
+}
+.signup form #description{
+    width: 500px;
+    text-align: center;
+    margin: 15px 15px 15px 15px;
+    border-radius: 10%;
+    font-size: 1.3vmax;
 }
 /* footer styling */
 footer{
