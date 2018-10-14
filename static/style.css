@@ -376,6 +376,29 @@ span{
     border-radius: 10%;
     font-size: 1.3vmax;
 }
+.container #sort{
+    width: 300px;
+    height: 30px;
+    margin: 5px 5px 5px 5px;
+    font-size: 15px;
+}
+.container .table-container{
+    height: 100%;
+    margin-top: 20px;
+}
+.table-container, .table-container tr th, .table-container tr td{
+    border: 2px solid #234968;
+    border-collapse: collapse;
+}
+.table-container tr th, .table-container tr td{
+    width: 180px;
+}
+.table-container tr th{
+    height: 50px;
+}
+.table-container tr td{
+    text-align: center;
+}
 /* footer styling */
 footer{
     background: #234968;
