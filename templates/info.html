@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=K2D">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../static/style.css">
-    <title>sale_record</title>
+    <title>info</title>
 </head>
 <body>
     <header>
@@ -23,43 +23,30 @@
             </nav>
         </div>
     </header>
-    <main>
-        <div class="container">
-            <button class="back fa fa-caret-left"><a href="index.html" style="text-decoration: none; color: black;">Back</a></button>
-            <button class="purchase fa fa-check">Buy</button>
-            <div class="table-holder">
-            <table class="sales">
-                <tr>
-                    <th>Item name</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Total cost</th>
-                    <th>Delete</th>
-                </tr>
-                <tr>
-                    <td>I phone X</td>
-                    <td>5.5" display fultouch screen, 3 GB RAM, Retnal scanner, product of Apple Inc.</td>
-                    <td>1</td>
-                    <td>Ksh 95,000</td>
-                    <td><button class="fa fa-trash delete"></button></td>
-                </tr>
-                <tr>
-                    <td>I phone X</td>
-                    <td>5.5" display fultouch screen, 3 GB RAM, Retnal scanner, product of Apple Inc.</td>
-                    <td>1</td>
-                    <td>Ksh 95,000</td>
-                    <td><button class="fa fa-trash delete"></button></td>
-                </tr>
-                <tr>
-                    <td>I phone X</td>
-                    <td>5.5" display fultouch screen, 3 GB RAM, Retnal scanner, product of Apple Inc.</td>
-                    <td>1</td>
-                    <td>Ksh 95,000</td>
-                    <td><button class="fa fa-trash delete"></button></td>
-                </tr>
-            </table>
+    <main>        
+            <div class="container">
+                <div class="info">
+                <h1>A word from the CEO</h1>
+                <div class="image">
+                    <img src="https://avatars3.githubusercontent.com/u/29574052?s=460&v=4" alt="mufasa">
+                </div>
+                <div class="message">
+                    <p>Hello guys. I am Mufasa. I am glad to have you on my team.
+                        I hope you are already settled in and ready to work. Reporting time in at 9 am
+                        every morning and closing time is at 5 pm every afternoon. In case of any
+                        query and/or feedback, comment in the text area provided below. Good day!
+                    </p>
+                </div>
+                <div class="comments">
+                    <form action="">
+                        <label for="comment">Comment:
+                            <textarea name="comment" id="comment" cols="80" rows="4" required></textarea>
+                        </label><br>
+                        <button type="submit"><span class="fa fa-check"></span></button>
+                    </form>
+                </div>
             </div>
-        </div>    
+        </div> 
     </main>
     <footer>
         <div class="container">
