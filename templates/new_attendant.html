@@ -28,22 +28,20 @@
             <div class="signup">
                 <form action="">
                     <label for="fname">Full Name:
-                        <input type="text" name="fname" id="fname" placeholder="e.g. John Oliver">
+                        <input type="text" name="fname" id="fname" placeholder="e.g. John Oliver" required>
                     </label><br>
                     <label for="email">Email:
-                        <input type="email" name="email" id="email" placeholder="e.g. name@email.com">
+                        <input type="email" name="email" id="email" placeholder="e.g. name@email.com" required>
                     </label><br>
                     <label for="idnumber">ID_number:
-                        <input type="number" name="idnumber" id="idnumber" placeholder="e.g. 12345678">
+                        <input type="number" name="idnumber" id="idnumber" placeholder="e.g. 12345678"required>
                     </label><br>
                     <label for="password">Password:
-                        <input type="password" name="password" id="password" placeholder="pick a password">
+                        <input type="password" name="password" id="password" placeholder="pick a password" required>
                     </label><br>
                     <label for="repass">Re-enter password:
-                        <input type="password" name="repass" id="repass" placeholder="enter password again">
+                        <input type="password" name="repass" id="repass" placeholder="enter password again" required>
                     </label><br>
-                    <input style="margin-left: 150px;" type="radio" name="role">Admin
-                    <input type="radio" name="role">Attendant<br>
                     <button class="discard"><span class="fa fa-times"></span></button>
                     <button type="submit" class="save"><span class="fa fa-check"></span></button>
                 </form>
