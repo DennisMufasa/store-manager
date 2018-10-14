@@ -242,6 +242,37 @@ span{
 .container .back:hover{
     background: #234968;
 }
+.container .search{
+    margin-left: 100px;
+}
+.search input{
+    padding: 8px 8px 8px 8px;
+    width: 300px;
+}
+.search button{
+    background: white;
+}
+.search button:hover{
+    background: #234968;
+}
+.inventory{
+    width: 900px;
+    margin-top: 20px;
+    margin-left: 100px;
+}
+.inventory table, .inventory th, .inventory td{
+    border: 2px solid #234968;
+    border-collapse: collapse;
+}
+.inventory th, .inventory td{
+    width: 180px;
+}
+.inventory th{
+    height: 50px;
+}
+.inventory td{
+    text-align: center;
+}
 /* Footer styling */
 footer{
     background: #234968;
