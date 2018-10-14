@@ -15,15 +15,45 @@
             <div id="img-container"><img id="logo" src="../static/img/logo.png" alt="logo"></div>
             <nav>
                 <ul>
-                        <li id="home"><a href="#"><img src="../static/img/home.png" alt="home"></a></li>
-                        <li id="profile"><a href="#"><img src="../static/img/profile.png" alt="profile"></a></li>
-                        <li id="info"><a href="#"><img src="../static/img/info.png" alt="info"></a></li>
-                        <li id="logout"><a href="#"><img src="../static/img/logout.png" alt="logout"></a></li>
+                        <li id="home"><a href="index.html"><img src="../static/img/home.png" alt="home"></a></li>
+                        <li id="profile"><a href="attendant_profile.html"><img src="../static/img/profile.png" alt="profile"></a></li>
+                        <li id="info"><a href="info.html"><img src="../static/img/info.png" alt="info"></a></li>
+                        <li id="logout"><a href="login.html"><img src="../static/img/logout.png" alt="logout"></a></li>
                 </ul>
             </nav>
         </div>
     </header>
     <main>
+            <div class="container">
+                    <div class="signup">
+                        <form action="">
+                            <label for="category">Product Category: <br>
+                                <select name="category" id="category">
+                                    <option value="">Electronics</option>
+                                    <option value="">Furniture</option>
+                                    <option value="">Sports</option>
+                                    <option value="">Jewelery</option>
+                                    <option value="">Antiques</option>
+                                    <option value="">Accessories</option>
+                                </select>
+                            </label><br>
+                            <label for="name">Product Name:
+                                <input type="text" name="product_name" id="name" placeholder="e.g. watch">
+                            </label><br>
+                            <label for="description">Product Description:
+                                <textarea name="description" id="description" cols="60" rows="4"></textarea>
+                            </label><br>
+                            <label for="qty">Product Quantity:
+                                <input type="number" name="qty" id="qty" placeholder="number of units">
+                            </label><br>
+                            <label for="cost">Unit Cost:
+                                <input type="number" name="cost" id="cost" placeholder="cost per unit">
+                            </label><br>
+                            <button class="discard"><span class="fa fa-times"></span></button>
+                            <button type="submit" class="save"><span class="fa fa-check"></span></button>
+                        </form>
+                    </div>
+                </div>
         
     </main>
     <footer>
