@@ -10,3 +10,6 @@ close_nav = ()=>{
     sidenav.style.width = "0"
     main.style.marginLeft = "0"
 }
+confirm = ()=>{
+    alert(`Save changes?!`)
+}

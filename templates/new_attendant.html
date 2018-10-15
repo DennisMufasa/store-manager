@@ -15,7 +15,7 @@
             <div id="img-container"><img id="logo" src="../static/img/logo.png" alt="logo"></div>
             <nav>
                 <ul>
-                        <li id="home"><a href="index.html"><img src="../static/img/home.png" alt="home"></a></li>
+                        <li id="home"><a href="admin.html"><img src="../static/img/home.png" alt="home"></a></li>
                         <li id="profile"><a href="attendant_profile.html"><img src="../static/img/profile.png" alt="profile"></a></li>
                         <li id="info"><a href="info.html"><img src="../static/img/info.png" alt="info"></a></li>
                         <li id="logout"><a href="login.html"><img src="../static/img/logout.png" alt="logout"></a></li>
@@ -35,6 +35,12 @@
                     </label><br>
                     <label for="idnumber">ID_number:
                         <input type="number" name="idnumber" id="idnumber" placeholder="e.g. 12345678"required>
+                    </label><br>
+                    <label  for="role">Role: <br>
+                        <select name="role" id="role">
+                            <option value="">Admin</option>
+                            <option value="">Attendant</option>
+                        </select>
                     </label><br>
                     <label for="password">Password:
                         <input type="password" name="password" id="password" placeholder="pick a password" required>

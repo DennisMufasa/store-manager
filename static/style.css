@@ -241,9 +241,6 @@
     .container .back:hover{
     background: #234968;
     }
-    .container .search{
-    margin-left: 100px;
-    }
     .search input{
     padding: 8px 8px 8px 8px;
     width: 300px;
@@ -255,9 +252,9 @@
     background: #234968;
     }
     .inventory{
-    width: 900px;
+    width: 100%;
     margin-top: 20px;
-    margin-left: 100px;
+    
     }
     .inventory table, .inventory th, .inventory td{
     border: 2px solid #234968;
@@ -341,16 +338,14 @@
 .signup{
     height: 569px;
     width: 569px;
-    /* padding: 25px 25px 25px 25px; */
     margin-left: 50%;
     margin-top: 25%;
     transform: translate(-50%, -50%);
 }
 .signup form label{
     width: 100%;
-    /* padding: 200px 200px 200px 200px; */
 }
-.signup form label input , #category{
+.signup form label input , #category, #role{
     width: 500px;
     text-align: center;
     margin: 15px 15px 15px 15px;
