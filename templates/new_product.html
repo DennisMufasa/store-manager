@@ -38,16 +38,16 @@
                                 </select>
                             </label><br>
                             <label for="name">Product Name:
-                                <input type="text" name="product_name" id="name" placeholder="e.g. watch">
+                                <input type="text" name="product_name" id="name" placeholder="e.g. watch" required>
                             </label><br>
                             <label for="description">Product Description:
-                                <textarea name="description" id="description" cols="60" rows="4"></textarea>
+                                <textarea required name="description" id="description" cols="60" rows="4"></textarea>
                             </label><br>
                             <label for="qty">Product Quantity:
-                                <input type="number" name="qty" id="qty" placeholder="number of units">
+                                <input type="number" name="qty" id="qty" placeholder="number of units" required>
                             </label><br>
                             <label for="cost">Unit Cost:
-                                <input type="number" name="cost" id="cost" placeholder="cost per unit">
+                                <input type="number" name="cost" id="cost" placeholder="cost per unit" required>
                             </label><br>
                             <button class="discard"><span class="fa fa-times"></span></button>
                             <button type="submit" class="save"><span class="fa fa-check"></span></button>

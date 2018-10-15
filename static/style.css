@@ -340,12 +340,15 @@
 /* add details pages styling */
 .signup{
     height: 569px;
-    width: 100%;
-    padding: 5px 5px 5px 5px;
+    width: 569px;
+    /* padding: 25px 25px 25px 25px; */
+    margin-left: 50%;
+    margin-top: 25%;
+    transform: translate(-50%, -50%);
 }
 .signup form label{
     width: 100%;
-    margin: 200px 200px 200px 200px;
+    /* padding: 200px 200px 200px 200px; */
 }
 .signup form label input , #category{
     width: 500px;
