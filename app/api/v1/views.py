@@ -16,6 +16,7 @@ def get_one_product(productId):
     pass
 @v1_bp.route('/sales', methods=['GET', 'POST'])
 def get_sales():
+    """Fetch all sales else post a new sale record if an attendant"""
     if not session.get("logged_in"):
         return redirect(url_for('/login'), code=302)
     if session["username"] != "admin" and request.method == 'POST':
