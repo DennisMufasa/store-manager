@@ -50,8 +50,7 @@ class User:
             })
             user_id += 1
             return "User added Successfully!"
-        else:
-            return "Confirm your credentials before adding a user!"
+        return "Confirm your credentials before adding a user!"
     def get_users(self):
         """get all users"""
         if not USERS:
@@ -190,14 +189,14 @@ class Sale(Product):
         if not SALES:
             return "No sales records have been created!"
         return SALES
-    def get_one_sale(self, sale_id):
+    def get_one_sale(self, saleId):
         """Fetch a specific sale record"""
         if not SALES:
             return "No sales records have been created!"
-        if isinstance(sale_id, int) is False:
+        if isinstance(saleId, int) is False:
             return "Sale_id should be a number!"
         for sale in SALES:
-            if sale_id not in sale.values():
+            if saleId not in sale.values():
                 return "That sale doesn't exist!"
             return sale
     def get_attendant_sales(self, attendant):
@@ -208,4 +207,15 @@ class Sale(Product):
             if attendant not in sale.values():
                 continue
             return sale
-        
+    def get_attendant_specific_sale(self, my_sale_id, name):
+        """Fetch specific sale report for specific attendant"""
+        if not SALES:
+            return "There are no sale records saved yet?!"
+        for sale in SALES:
+            if name not in sale.values():
+                return "You don't have any sales!"
+            mine = sale
+            for record in mine:
+                if my_sale_id not in record:
+                    return "You don't have any sales with that id!"
+                return record
