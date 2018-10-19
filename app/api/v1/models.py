@@ -200,3 +200,12 @@ class Sale(Product):
             if sale_id not in sale.values():
                 return "That sale doesn't exist!"
             return sale
+    def get_attendant_sales(self, attendant):
+        """Fetch all sales per attendant"""
+        if not SALES:
+            return "There are no sales currently!"
+        for sale in SALES:
+            if attendant not in sale.values():
+                continue
+            return sale
+        
