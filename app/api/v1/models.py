@@ -13,26 +13,32 @@ sale_id = 1
 # models
 class User:
     """A model to represent a user"""
-    def __init__(self, email, username, password, role):
+    def __init__(self):
         """class constructor"""
-        self.email = email
-        self.username = username
-        self.password = password
-        self.role = role
-    def valiadte_credentials(self):
-        if  bool(re.search(r'@', self.email)) is False:
+        self.email = ""
+        self.username = ""
+        self.password = ""
+        self.role = ""
+    @staticmethod
+    def valiadte_credentials(credentials):
+        """Check user crednetials for anomalies before registration"""
+        if  bool(re.search(r'@', credentials["email"])) is False:
             return "Your email should have an @ somewhere!"
         for user in USERS:
-            if user["email"] == self.email:
+            if user["email"] == credentials["email"]:
                 return "That email is already registered!"
-        if self.role != "admin" and self.role != "attendant":
+        if credentials["role"] != "admin" and credentials["role"] != "attendant":
             return "Roles are that of the admin and attendant only!"
         return True
-    def add_user(self):
+    def add_user(self, credentials):
         """Create a new user"""
         # global variable
         global user_id
-        if self.valiadte_credentials() is True:
+        # check credentials for data
+        if not credentials:
+            return "Enter some data for the server to process!"
+        # check validity of data
+        if self.valiadte_credentials(credentials) is True:
             USERS.append({
                 "user_id": user_id,
                 "email": self.email,
@@ -61,29 +67,30 @@ class User:
         """validate user credentials during login"""
         for user in USERS:
             if user['username'] == credentials["username"] and user['password'] == credentials["password"]:
-                return "Validation Successful!"
+                return "Login Successful!"
         return "Invalid credentials"
 
 
 class Product:
     """A class to represent inventory"""
-    def __init__(self, name, category, qty, unit_cost):
+    def __init__(self):
         """class constructor"""
-        self.name = name
-        self.category = category
-        self.qty = qty
-        self.unit_cost = unit_cost
+        self.name = ""
+        self.category = ""
+        self.qty = 0
+        self.unit_cost = 0
         self.total_cost = self.qty * self.unit_cost
-    def validate_products(self):
+    @staticmethod
+    def validate_products(product_details):
         """Check validity of product details"""
-        if self.qty < 5:
+        if product_details["quantity"] < 5:
             return "Store requires at least five products of every type!"
-        if self.category not in CATEGORY:
+        if product_details["category"] not in CATEGORY:
             return "Store doesn't sell that category of items!"
         return True
-    def add_product(self):
+    def add_product(self, product_details):
         """Add a new product"""
-        if self.validate_products() is True:
+        if self.validate_products(product_details) is True:
             global product_id
             INVENTORY.append({
                 "product_id": product_id,
@@ -106,71 +113,71 @@ class Product:
             return "product id should be a number"
         for product in INVENTORY:
             if productId not in product.values():
-                return "No products with that is exist!"
+                return "No products with that id exist!"
             return product
-    def edit_category(self, productId, category):
+    def edit_category(self, edit):
         """Change product category"""
-        if isinstance(productId, int) is False:
-            return "Product id should be a number!"
-        if isinstance(category, str) is False:
-            return "Category should be a word!"
-        if category not in CATEGORY:
+        if not edit:
+            return "Enter product name to edit and category to change to!"
+        if edit["category"] not in CATEGORY:
             return "Items of that category are not present in store!"
         for product in INVENTORY:
-            if productId not in product:
+            if edit["name"] not in product.values():
                 return "That product doesn't exist in Inventory!"
             else:
-                product["product_category"] = category
-                return "Category changed to ", category
-    def edit_cost(self, productId, cost):
+                product["product_category"] = edit["category"]
+                return "Category changed to ", edit["category"]
+    def edit_cost(self, edit):
         """Change product cost"""
-        if isinstance(productId, int) is False:
-            return "Product id should be a number"
-        if isinstance(cost, int) is False:
+        if not edit:
+            return "Enter product name to edit and cost to change to!"
+        if isinstance(edit["cost"], int) is False:
             return "Currencies should be numbers!"
         for product in INVENTORY:
-            if productId not in product:
+            if edit["name"] not in product.values():
                 return "That product doesn't exist in Inventory!"
             else:
-                product["product_unit_cost"] = cost
-                return "Unit cost changed to ", cost
+                product["product_unit_cost"] = edit["cost"]
+                return "Unit cost changed to ", edit["cost"]
 
 
 class Sale(Product):
     """A class representing a sale.
     This class inherits from Product class"""
-    def __init__(self, name, category, qty, unit_cost):
+    def __init__(self):
         """class constructor"""
-        Product.__init__(self, name, category, qty, unit_cost)
-    def create_sale(self, username, product_name, quantity):
+        Product.__init__(self)
+    def create_sale(self, sale_details):
         """creating a new sale"""
+        if not sale_details:
+            return "Enter sale details to save!"
         #global variable
         global sale_id
         if not INVENTORY:
             return "There are no products in inventory!"
-        if isinstance(quantity, int) is False:
-            return "Are you serious, quantity should be a number!"
+        if isinstance(sale_details["quantity"], int) is False and sale_details["quantity"] == 0:
+            return "Make sure quantity is sensible!"
         for product in INVENTORY:
-            if product_name not in product.values():
+            if sale_details["product_name"] not in product.values():
                 return "That item is not sold in this store!"
             else:
                 tosell = product
-                if tosell["product_quantity"] - quantity <= 4:
+                if tosell["product_quantity"] - sale_details["quantity"] <= 4:
                     return "That product is currently out of stock!"
                 else:
-                    bill = tosell["unit_cost"] * quantity
+                    bill = tosell["unit_cost"] * sale_details["quantity"]
                     date = datetime.datetime.now()
                     formatted_date = date.strftime("%c")
                     SALES.append({
                         "sale_id": sale_id,
-                        "attendant": username,
-                        "product": product,
-                        "quantity": quantity,
+                        "attendant": sale_details["username"],
+                        "product": sale_details["product_name"],
+                        "quantity": sale_details["quantity"],
                         "Bill": bill,
                         "Date": formatted_date
                     })
                     sale_id += 1
-                    tosell["product_quantity"] = tosell["product_qauntity"] - quantity
+                    tosell["product_quantity"] = tosell["product_qauntity"] - sale_details["quantity"]
                     return "New sale record created!"
     def get_sales(self):
         """get all sale records"""
