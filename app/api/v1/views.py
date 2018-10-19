@@ -1,6 +1,6 @@
 """API endpoints"""
 # third-party imports
-from flask import jsonify, request, make_response, session, redirect, session
+from flask import jsonify, request, make_response, session, redirect, url_for
 from . import v1_bp
 # local imports
 from . import models
@@ -20,7 +20,16 @@ def get_sales():
     pass
 @v1_bp.route('/sales/<saleId>')
 def get_one_sale(saleId):
-    pass
+    """Fetch a specif sale record"""
+    if not session["logged_in"]:
+        return redirect(url_for('/login'))
+    if session["username"] != "admin":
+        return make_response(jsonify({
+            "Message": sale.get_attendant_specific_sale(saleId, session["username"])
+        }))
+    return make_response(jsonify({
+        "Message": sale.get_one_sale(saleId)
+    }))
 @v1_bp.route('/login', methods=['GET', 'POST'])
 def login():
     pass
