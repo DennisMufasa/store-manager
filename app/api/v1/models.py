@@ -22,6 +22,8 @@ class User:
     @staticmethod
     def valiadte_credentials(credentials):
         """Check user crednetials for anomalies before registration"""
+        if not credentials:
+            return "Enter data for the server to process!"
         if  bool(re.search(r'@', credentials["email"])) is False:
             return "Your email should have an @ somewhere!"
         for user in USERS:
@@ -65,6 +67,8 @@ class User:
             return user
     def validate_user(self, credentials):
         """validate user credentials during login"""
+        if not credentials:
+            return "Enter data for the server to process!"
         for user in USERS:
             if user['username'] == credentials["username"] and user['password'] == credentials["password"]:
                 return "Login Successful!"
