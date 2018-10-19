@@ -17,7 +17,6 @@ def get_products():
         return "You are not an admin!"
     if request.method == 'POST':
         request_data = request.get_json()
-        request_data["username"] = session["username"]
         return make_response(jsonify({
             "Message": sale.add_product(request_data)
         }), 201)
