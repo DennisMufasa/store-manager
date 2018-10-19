@@ -69,6 +69,8 @@ class User:
         """validate user credentials during login"""
         if not credentials:
             return "Enter data for the server to process!"
+        if not USERS:
+            return "No useres registered. Consult admin for assistance!"
         for user in USERS:
             if user['username'] == credentials["username"] and user['password'] == credentials["password"]:
                 return "Login Successful!"

@@ -1,7 +1,13 @@
 """API endpoints"""
 # third-party imports
-from flask import jsonify, request, make_response, session
+from flask import jsonify, request, make_response, session, redirect, session
 from . import v1_bp
+# local imports
+from . import models
+# create instances of objects
+user = models.User()
+sale = models.Sale()
+
 # routes
 @v1_bp.route('/products', methods=['GET', 'POST'])
 def get_products():
