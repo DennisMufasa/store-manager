@@ -2,6 +2,11 @@
 # third-party imports
 from flask import jsonify, request, make_response, session
 from . import v1_bp
+# local imports
+from . import models
+# create instances of objects
+user = models.User()
+sale = models.Sale()
 # routes
 @v1_bp.route('/products', methods=['GET', 'POST'])
 def get_products():
@@ -21,3 +26,10 @@ def login():
 @v1_bp.route('/signup')
 def signup():
     pass
+@v1_bp.route('/logout')
+def logout():
+    if not session.get("logged_in"):
+        return "You are not logged in!"
+    session["logged_in"] = False
+    session["username"] = ""
+    return "Logged out Successfully!"
