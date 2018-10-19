@@ -13,8 +13,11 @@ def get_products():
     """get all products and add a new product"""
     if not session.get("logged_in"):
         return redirect(url_for('login'), code=302)
+    if session["username"] != "admin":
+        return "You are not an admin!"
     if request.method == 'POST':
         request_data = request.get_json()
+        request_data["username"] = session["username"]
         return make_response(jsonify({
             "Message": sale.add_product(request_data)
         }), 201)
