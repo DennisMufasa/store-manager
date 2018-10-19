@@ -13,16 +13,18 @@ def get_products():
     """get all products and add a new product"""
     if not session.get("logged_in"):
         return redirect(url_for('login'), code=302)
-    if session["username"] != "admin":
-        return "You are not an admin!"
-    if request.method == 'POST':
-        request_data = request.get_json()
+    if request.method == 'GET':
         return make_response(jsonify({
-            "Message": sale.add_product(request_data)
-        }), 201)
+            "Message": sale.get_products()
+        }))
+    if session["username"] != "admin":
+        return make_response(jsonify({
+            "Message": "You are not an admin!"
+        }))
+    request_data = request.get_json()
     return make_response(jsonify({
-        "Message": sale.get_products()
-    }), 200)
+        "Message": sale.add_product(request_data)
+    }))
 @v1_bp.route('/products/<productId>')
 def get_one_product(productId):
     pass
