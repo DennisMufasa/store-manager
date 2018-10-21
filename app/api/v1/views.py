@@ -54,7 +54,16 @@ def get_sales():
         }))
 @v1_bp.route('/sales/<saleId>')
 def get_one_sale(saleId):
-    pass
+    """Fetch a specif sale record"""
+    if not session["logged_in"]:
+        return redirect(url_for('/login'))
+    if session["username"] != "admin":
+        return make_response(jsonify({
+            "Message": sale.get_attendant_specific_sale(saleId, session["username"])
+        }))
+    return make_response(jsonify({
+        "Message": sale.get_one_sale(saleId)
+    }))
 @v1_bp.route('/login', methods=['POST'])
 def login():
     """Login users into their accounts"""
@@ -74,7 +83,17 @@ def login():
     }))
 @v1_bp.route('/signup', methods=['POST'])
 def signup():
-    pass
+    """Admin can add a new attendant"""
+    if not session.get("logged_in"):
+        return redirect(url_for('login'))
+    if session["username"] != "admin":
+        return make_response(jsonify({
+            "Message": "You are not an admin!"
+        }))
+    request_data = request.get_json()
+    return make_response(jsonify({
+        "Message": user.add_user(request_data)
+    }))
 @v1_bp.route('/logout')
 def logout():
     if not session.get("logged_in"):
