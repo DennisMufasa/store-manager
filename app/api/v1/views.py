@@ -55,14 +55,15 @@ def login():
     pass
 @v1_bp.route('/signup', methods=['POST'])
 def signup():
-    """Admin can add a new attendant"""
+    pass
+@v1_bp.route('/edit/category', methods=['PUT'])
+def edit_category():
+    """Admin edit a product category"""
     if not session.get("logged_in"):
-        return redirect(url_for('login'))
+        return redirect(url_for('login'), code=302)
     if session["username"] != "admin":
-        return make_response(jsonify({
-            "Message": "You are not an admin!"
-        }))
+        return "you are not an admin!"
     request_data = request.get_json()
     return make_response(jsonify({
-        "Message": user.add_user(request_data)
+        "Message": sale.edit_category(request_data)
     }))
