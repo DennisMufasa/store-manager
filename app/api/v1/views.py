@@ -1,6 +1,6 @@
 """API endpoints"""
 # third-party imports
-from flask import jsonify, request, make_response, session, redirect, session
+from flask import jsonify, request, make_response, session, redirect, url_for
 from . import v1_bp
 # local imports
 from . import models
@@ -27,3 +27,15 @@ def login():
 @v1_bp.route('/signup')
 def signup():
     pass
+@v1_bp.route('/edit/attendant/<user_id>')
+def change_attendant_role(user_id):
+    """Admin makes an attendant an admin"""
+    if not session.get("logged_in"):
+        return redirect(url_for('login'))
+    if session["username"] != "admin":
+        return make_response(jsonify({
+            "Message": "You are not an admin!"
+        }))
+    return make_response(jsonify({
+        "Message": user.edit_user_role(user_id)
+    }))
