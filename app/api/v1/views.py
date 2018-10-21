@@ -75,6 +75,13 @@ def login():
 @v1_bp.route('/signup', methods=['POST'])
 def signup():
     pass
+@v1_bp.route('/logout')
+def logout():
+    if not session.get("logged_in"):
+        return "You are not logged in!"
+    session["logged_in"] = False
+    session["username"] = ""
+    return "Logged out Successfully!"
 @v1_bp.route('/edit/category', methods=['PUT'])
 def edit_category():
     """Admin edit a product category"""
@@ -99,4 +106,3 @@ def edit_cost():
     return make_response(jsonify({
         "Message": sale.edit_cost(request_data)
     }), 202)
-  
