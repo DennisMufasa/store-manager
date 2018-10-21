@@ -1,5 +1,5 @@
 """API endpoints"""
-# third-partzzy imports
+# third-party imports
 from flask import jsonify, request, make_response, session, redirect, url_for
 from . import v1_bp
 # local imports
