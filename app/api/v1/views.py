@@ -27,7 +27,12 @@ def get_products():
     }))
 @v1_bp.route('/products/<productId>')
 def get_one_product(productId):
-    pass
+    """Fetch a specific product using its id"""
+    if not session.get("logged_in"):
+        return redirect(url_for('login'), code=302)
+    return make_response(jsonify({
+        "Message": sale.get_one_product(productId)
+    }), 200)
 @v1_bp.route('/sales', methods=['GET', 'POST'])
 def get_sales():
     """Fetch all sales else post a new sale record if an attendant"""
