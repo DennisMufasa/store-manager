@@ -67,3 +67,17 @@ def edit_category():
     return make_response(jsonify({
         "Message": sale.edit_category(request_data)
     }))
+@v1_bp.route('/edit/cost', methods=['PUT'])
+def edit_cost():
+    """Admins edit a product's unit cost"""
+    if not session.get("logged_in"):
+        return redirect(url_for('/login'), code=302)
+    if session["username"] != "admin":
+        return make_response(jsonify({
+            "Message": "you are not an admin"
+        }), 401)
+    request_data = request.get_json()
+    return make_response(jsonify({
+        "Message": sale.edit_cost(request_data)
+    }), 202)
+  
