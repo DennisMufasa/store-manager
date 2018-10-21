@@ -10,7 +10,21 @@ sale = models.Sale()
 # routes
 @v1_bp.route('/products', methods=['GET', 'POST'])
 def get_products():
-    pass
+    """get all products and add a new product"""
+    if not session.get("logged_in"):
+        return redirect(url_for('login'), code=302)
+    if request.method == 'GET':
+        return make_response(jsonify({
+            "Message": sale.get_products()
+        }))
+    if session["username"] != "admin":
+        return make_response(jsonify({
+            "Message": "You are not an admin!"
+        }))
+    request_data = request.get_json()
+    return make_response(jsonify({
+        "Message": sale.add_product(request_data)
+    }))
 @v1_bp.route('/products/<productId>')
 def get_one_product(productId):
     pass
