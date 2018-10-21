@@ -1,6 +1,6 @@
 """API endpoints"""
 # third-party imports
-from flask import jsonify, request, make_response, session, url_for, redirect
+from flask import jsonify, request, make_response, session, redirect, url_for
 from . import v1_bp
 # local imports
 from . import models

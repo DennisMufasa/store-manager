@@ -3,7 +3,13 @@
 import re
 import datetime
 # global variables
-USERS = []
+USERS = [{
+                "user_id": 0,
+                "email": "admin@email.com",
+                "username": "admin",
+                "password": "superuser",
+                "role": "admin"
+            }]
 user_id = 1
 INVENTORY = []
 CATEGORY = ["furniture", "electronics", "sports", "accessories"]
@@ -22,10 +28,12 @@ class User:
     @staticmethod
     def valiadte_credentials(credentials):
         """Check user crednetials for anomalies before registration"""
+        if not credentials:
+            return "Enter data for the server to process!"
         if  bool(re.search(r'@', credentials["email"])) is False:
             return "Your email should have an @ somewhere!"
-        for user in USERS:
-            if user["email"] == credentials["email"]:
+        for user in range(len(USERS)):
+            if USERS[user]["email"] == credentials["email"]:
                 return "That email is already registered!"
         if credentials["role"] != "admin" and credentials["role"] != "attendant":
             return "Roles are that of the admin and attendant only!"
@@ -48,8 +56,7 @@ class User:
             })
             user_id += 1
             return "User added Successfully!"
-        else:
-            return "Confirm your credentials before adding a user!"
+        return "Confirm your credentials before adding a user!"
     def get_users(self):
         """get all users"""
         if not USERS:
@@ -59,16 +66,31 @@ class User:
         """fetch a specific user"""
         if isinstance(userId, int) is False:
             return "User_id should be a number!"
-        for user in USERS:
-            if userId not in user.values():
-                return "No user with that is is registered!"
-            return user
+        for user in range(len(USERS)):
+            if userId != USERS[user]["user_id"]:
+                continue
+            return USERS[user]
     def validate_user(self, credentials):
         """validate user credentials during login"""
-        for user in USERS:
-            if user['username'] == credentials["username"] and user['password'] == credentials["password"]:
-                return "Login Successful!"
-        return "Invalid credentials"
+        if not credentials:
+            return "Enter data for the server to process!"
+        if not USERS:
+            return "No useres registered. Consult admin for assistance!"
+        for user in range(len(USERS)):
+            if USERS[user]['username'] != credentials["username"] and USERS[user]['password'] != credentials["password"]:
+                continue
+        return "Log in successful!"
+    def edit_user_role(self, userId):
+        """Admin changes attendant role to admin"""
+        if not USERS:
+            return "No users registered yet!"
+        if isinstance(user_id, int) is False:
+            return "Please see that user ids are numbers!"
+        for user in range(len(USERS)):
+            if userId != USERS[user]["user_id"]:
+                continue
+            user["role"] = "admin"
+            return "Attendant was promoted to admin!"
 
 
 class Product:
@@ -111,34 +133,32 @@ class Product:
         """fetch specific product from invenotry"""
         if isinstance(productId, int) is False:
             return "product id should be a number"
-        for product in INVENTORY:
-            if productId not in product.values():
-                return "No products with that id exist!"
-            return product
+        for product in range(len(INVENTORY)):
+            if productId != INVENTORY[product]["product_id"]:
+                continue
+            return INVENTORY[product]
     def edit_category(self, edit):
         """Change product category"""
         if not edit:
             return "Enter product name to edit and category to change to!"
         if edit["category"] not in CATEGORY:
             return "Items of that category are not present in store!"
-        for product in INVENTORY:
-            if edit["name"] not in product.values():
-                return "That product doesn't exist in Inventory!"
-            else:
-                product["product_category"] = edit["category"]
-                return "Category changed to ", edit["category"]
+        for product in range(len(INVENTORY)):
+            if edit["name"] != INVENTORY[product]["product_name"]:
+                continue
+            INVENTORY[product]["product_category"] = edit["category"]
+            return "Category changed to ", edit["category"]
     def edit_cost(self, edit):
         """Change product cost"""
         if not edit:
             return "Enter product name to edit and cost to change to!"
         if isinstance(edit["cost"], int) is False:
             return "Currencies should be numbers!"
-        for product in INVENTORY:
-            if edit["name"] not in product.values():
-                return "That product doesn't exist in Inventory!"
-            else:
-                product["product_unit_cost"] = edit["cost"]
-                return "Unit cost changed to ", edit["cost"]
+        for product in range(len(INVENTORY)):
+            if edit["name"] != INVENTORY[product]["product_name"]:
+                continue
+            INVENTORY[product]["product_unit_cost"] = edit["cost"]
+            return "Unit cost changed to ", edit["cost"]
 
 
 class Sale(Product):
@@ -157,40 +177,58 @@ class Sale(Product):
             return "There are no products in inventory!"
         if isinstance(sale_details["quantity"], int) is False and sale_details["quantity"] == 0:
             return "Make sure quantity is sensible!"
-        for product in INVENTORY:
-            if sale_details["product_name"] not in product.values():
-                return "That item is not sold in this store!"
-            else:
-                tosell = product
-                if tosell["product_quantity"] - sale_details["quantity"] <= 4:
-                    return "That product is currently out of stock!"
-                else:
-                    bill = tosell["unit_cost"] * sale_details["quantity"]
-                    date = datetime.datetime.now()
-                    formatted_date = date.strftime("%c")
-                    SALES.append({
-                        "sale_id": sale_id,
-                        "attendant": sale_details["username"],
-                        "product": sale_details["product_name"],
-                        "quantity": sale_details["quantity"],
-                        "Bill": bill,
-                        "Date": formatted_date
-                    })
-                    sale_id += 1
-                    tosell["product_quantity"] = tosell["product_qauntity"] - sale_details["quantity"]
-                    return "New sale record created!"
+        for product in range(len(INVENTORY)):
+            if sale_details["product_name"] != INVENTORY[product]["product_name"]:
+                continue
+            tosell = INVENTORY[product]
+            if tosell["product_quantity"] - sale_details["quantity"] <= 4:
+                return "That product is currently out of stock!"
+            bill = tosell["unit_cost"] * sale_details["quantity"]
+            date = datetime.datetime.now()
+            formatted_date = date.strftime("%c")
+            SALES.append({
+                "sale_id": sale_id,
+                "attendant": sale_details["username"],
+                "product": sale_details["product_name"],
+                "quantity": sale_details["quantity"],
+                "Bill": bill,
+                "Date": formatted_date
+                })
+            sale_id += 1
+            tosell["product_quantity"] = tosell["product_qauntity"] - sale_details["quantity"]
+            return "New sale record created!"
     def get_sales(self):
         """get all sale records"""
         if not SALES:
             return "No sales records have been created!"
         return SALES
-    def get_one_sale(self, sale_id):
+    def get_one_sale(self, saleId):
         """Fetch a specific sale record"""
         if not SALES:
             return "No sales records have been created!"
-        if isinstance(sale_id, int) is False:
+        if isinstance(saleId, int) is False:
             return "Sale_id should be a number!"
-        for sale in SALES:
-            if sale_id not in sale.values():
-                return "That sale doesn't exist!"
-            return sale
+        for sale in range(len(SALES)):
+            if saleId != SALES[sale]["sale_id"]:
+                continue
+            return SALES[sale]
+    def get_attendant_sales(self, attendant):
+        """Fetch all sales per attendant"""
+        if not SALES:
+            return "There are no sales currently!"
+        for sale in range(len(SALES)):
+            if attendant != SALES[sale]["attendant"]:
+                continue
+            return SALES[sale]
+    def get_attendant_specific_sale(self, my_sale_id, name):
+        """Fetch specific sale report for specific attendant"""
+        if not SALES:
+            return "There are no sale records saved yet?!"
+        for sale in range(len(SALES)):
+            if name != SALES[sale]["attendant"]:
+                continue
+            attendant_sale = SALES[sale]
+            for record in attendant_sale:
+                if my_sale_id != record["sale_id"]:
+                    continue
+                return record
