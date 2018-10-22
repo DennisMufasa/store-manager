@@ -4,3 +4,11 @@ An app that manages a single store with an admin and store attendant access leve
 
 
 App still under construction
+
+## How to manually run this app
+1. Clone this repository into your local machine
+2. Navigate to the folder store-manager. `cd store-manager`
+3. Checkout develop branch. `git checkout develop`
+4. While virtualenv is active: do `export FLASK_APP=run.py`, `export FLASK_ENV=development`, `export DEBUG=1`
+5. Run the app by `flask run`
+6. Test endpoints on postman
