@@ -6,7 +6,11 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - pytest
+  - coverage run app/test/v1/test_v1.py
+
+after_success:
+  - coveralls
+  - coverage report
 
 #safelist
 branches:
