@@ -12,7 +12,9 @@ sale = models.Sale()
 def get_products():
     """get all products and add a new product"""
     if not session.get("logged_in"):
-        return redirect(url_for('login'), code=302)
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }))
     if request.method == 'GET':
         return make_response(jsonify({
             "Message": sale.get_products()
@@ -25,11 +27,13 @@ def get_products():
     return make_response(jsonify({
         "Message": sale.add_product(request_data)
     }))
-@v1_bp.route('/products/<productId>')
+@v1_bp.route('/products/<int:productId>')
 def get_one_product(productId):
     """Fetch a specific product using its id"""
     if not session.get("logged_in"):
-        return redirect(url_for('login'), code=302)
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }))
     return make_response(jsonify({
         "Message": sale.get_one_product(productId)
     }), 200)
@@ -37,7 +41,9 @@ def get_one_product(productId):
 def get_sales():
     """Fetch all sales else post a new sale record if an attendant"""
     if not session.get("logged_in"):
-        return redirect(url_for('/login'), code=302)
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }))
     if session["username"] != "admin" and request.method == 'POST':
         request_data = request.get_json()
         request_data["username"] = session["username"]
@@ -52,11 +58,13 @@ def get_sales():
         return make_response(jsonify({
             "Message": sale.get_sales()
         }))
-@v1_bp.route('/sales/<saleId>')
+@v1_bp.route('/sales/<int:saleId>')
 def get_one_sale(saleId):
     """Fetch a specif sale record"""
-    if not session["logged_in"]:
-        return redirect(url_for('/login'))
+    if not session.get("logged_in"):
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }))
     if session["username"] != "admin":
         return make_response(jsonify({
             "Message": sale.get_attendant_specific_sale(saleId, session["username"])
@@ -69,12 +77,12 @@ def login():
     """Login users into their accounts"""
     if not session.get("logged_in"):
         request_data = request.get_json()
-        if user.validate_user(request_data) == "Login Successful!":
+        if user.validate_user(request_data) == "Log in successful!":
             session["logged_in"] = True
             session["username"] = request_data["username"]
             return make_response(jsonify({
                 "Message": "Login Successfull!"
-            }), 200)
+            }))
         return make_response(jsonify({
             "Message": "Log in failed! Check your credentials!"
         }))
@@ -85,7 +93,9 @@ def login():
 def signup():
     """Admin can add a new attendant"""
     if not session.get("logged_in"):
-        return redirect(url_for('login'))
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }))
     if session["username"] != "admin":
         return make_response(jsonify({
             "Message": "You are not an admin!"
@@ -105,7 +115,9 @@ def logout():
 def edit_category():
     """Admin edit a product category"""
     if not session.get("logged_in"):
-        return redirect(url_for('login'), code=302)
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }))
     if session["username"] != "admin":
         return "you are not an admin!"
     request_data = request.get_json()
@@ -116,12 +128,14 @@ def edit_category():
 def edit_cost():
     """Admins edit a product's unit cost"""
     if not session.get("logged_in"):
-        return redirect(url_for('/login'), code=302)
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }))
     if session["username"] != "admin":
         return make_response(jsonify({
             "Message": "you are not an admin"
-        }), 401)
+        }))
     request_data = request.get_json()
     return make_response(jsonify({
         "Message": sale.edit_cost(request_data)
-    }), 202)
+    }))

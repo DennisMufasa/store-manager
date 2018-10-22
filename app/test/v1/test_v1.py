@@ -14,7 +14,7 @@ class Test_view:
             "name": "machete",
             "cost": 1000
         })
-        assert response.status_code == 201
+        assert response.status_code == 200
     def test_get_one_product(self, client):
         """test get one client endpoint"""
         response = client.get('/api/v1/products/1')
@@ -34,18 +34,18 @@ class Test_view:
             "qty": 2,
             "cost": 1000
         })
-        assert response.status_code == 201
+        assert response.status_code == 200
     def test_login(self, client):
         """test login endpoint"""
         response = client.post('/api/v1/login', data={
             "user": "mufasa",
             "password": "dfghbjnk"
         })
-        assert response.status_code == 201
+        assert response.status_code == 200
     def test_signup(self, client):
         """test signup endpoint"""
         response = client.post('/api/v1/login', data={
             "user": "mufasa",
             "password": "dfghbjnk"
         })
-        assert response.status_code == 201
+        assert response.status_code == 200

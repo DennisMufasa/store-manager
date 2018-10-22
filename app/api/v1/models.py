@@ -47,6 +47,10 @@ class User:
             return "Enter some data for the server to process!"
         # check validity of data
         if self.valiadte_credentials(credentials) is True:
+            self.email = credentials["email"]
+            self.username = credentials["username"]
+            self.password = credentials["password"]
+            self.role = credentials["role"]
             USERS.append({
                 "user_id": user_id,
                 "email": self.email,
@@ -77,14 +81,14 @@ class User:
         if not USERS:
             return "No useres registered. Consult admin for assistance!"
         for user in range(len(USERS)):
-            if USERS[user]['username'] != credentials["username"] and USERS[user]['password'] != credentials["password"]:
+            if USERS[user]["username"] != credentials["username"] and USERS[user]["password"] != credentials["password"]:
                 continue
-        return "Log in successful!"
+            return "Log in successful!"
     def edit_user_role(self, userId):
         """Admin changes attendant role to admin"""
         if not USERS:
             return "No users registered yet!"
-        if isinstance(user_id, int) is False:
+        if isinstance(userId, int) is False:
             return "Please see that user ids are numbers!"
         for user in range(len(USERS)):
             if userId != USERS[user]["user_id"]:
@@ -101,7 +105,7 @@ class Product:
         self.category = ""
         self.qty = 0
         self.unit_cost = 0
-        self.total_cost = self.qty * self.unit_cost
+        self.total_cost = 0
     @staticmethod
     def validate_products(product_details):
         """Check validity of product details"""
@@ -114,6 +118,11 @@ class Product:
         """Add a new product"""
         if self.validate_products(product_details) is True:
             global product_id
+            self.name = product_details["product_name"]
+            self.category = product_details["category"]
+            self.qty = product_details["quantity"]
+            self.unit_cost = product_details["product_unit_cost"]
+            self.total_cost = self.qty * self.unit_cost
             INVENTORY.append({
                 "product_id": product_id,
                 "product_name": self.name,
@@ -180,10 +189,9 @@ class Sale(Product):
         for product in range(len(INVENTORY)):
             if sale_details["product_name"] != INVENTORY[product]["product_name"]:
                 continue
-            tosell = INVENTORY[product]
-            if tosell["product_quantity"] - sale_details["quantity"] <= 4:
+            if INVENTORY[product]["product_quantity"] - sale_details["quantity"] <= 4:
                 return "That product is currently out of stock!"
-            bill = tosell["unit_cost"] * sale_details["quantity"]
+            bill = INVENTORY[product]["product_unit_cost"] * sale_details["quantity"]
             date = datetime.datetime.now()
             formatted_date = date.strftime("%c")
             SALES.append({
@@ -195,7 +203,7 @@ class Sale(Product):
                 "Date": formatted_date
                 })
             sale_id += 1
-            tosell["product_quantity"] = tosell["product_qauntity"] - sale_details["quantity"]
+            INVENTORY[product]["product_quantity"] = INVENTORY[product]["product_quantity"] - sale_details["quantity"]
             return "New sale record created!"
     def get_sales(self):
         """get all sale records"""
@@ -225,10 +233,9 @@ class Sale(Product):
         if not SALES:
             return "There are no sale records saved yet?!"
         for sale in range(len(SALES)):
-            if name != SALES[sale]["attendant"]:
-                continue
-            attendant_sale = SALES[sale]
-            for record in attendant_sale:
-                if my_sale_id != record["sale_id"]:
+            if SALES[sale]["sale_id"] != my_sale_id:
+                return "That sale record doesnt exist!"
+            for item in SALES[sale]:
+                if item["attendant"] != name:
                     continue
-                return record
+                return item
