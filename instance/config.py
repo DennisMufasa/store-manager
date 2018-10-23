@@ -12,6 +12,7 @@ class Testing(Config):
     """Testing configurations"""
     DEBUG = True
     TESTING = True
+# an object to configure flask app from
 configuration = {
     "development": Development,
     "testing": Testing

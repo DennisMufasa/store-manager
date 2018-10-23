@@ -35,7 +35,7 @@ class User:
         for user in range(len(USERS)):
             if USERS[user]["email"] == credentials["email"]:
                 return "That email is already registered!"
-        if credentials["role"] != "admin" and credentials["role"] != "attendant":
+        if credentials["role"]!="admin" and credentials["role"] != "attendant":
             return "Roles are that of the admin and attendant only!"
         return True
     def add_user(self, credentials):
@@ -60,7 +60,7 @@ class User:
             })
             user_id += 1
             return "User added Successfully!"
-        return "Confirm your credentials before adding a user!"
+        return self.valiadte_credentials(credentials)
     def get_users(self):
         """get all users"""
         if not USERS:
@@ -71,9 +71,9 @@ class User:
         if isinstance(userId, int) is False:
             return "User_id should be a number!"
         for user in range(len(USERS)):
-            if userId != USERS[user]["user_id"]:
-                continue
-            return USERS[user]
+            if userId == USERS[user]["user_id"]:
+                return USERS[user]
+        return "That user_id is not registered to any users!"
     def validate_user(self, credentials):
         """validate user credentials during login"""
         if not credentials:
@@ -81,9 +81,9 @@ class User:
         if not USERS:
             return "No useres registered. Consult admin for assistance!"
         for user in range(len(USERS)):
-            if USERS[user]["username"] != credentials["username"] and USERS[user]["password"] != credentials["password"]:
-                continue
-            return "Log in successful!"
+            if USERS[user]["username"] == credentials["username"] and USERS[user]["password"] == credentials["password"]:
+                return "Log in successful!"
+        return "Invalid Credentials"
     def edit_user_role(self, userId):
         """Admin changes attendant role to admin"""
         if not USERS:
@@ -91,10 +91,10 @@ class User:
         if isinstance(userId, int) is False:
             return "Please see that user ids are numbers!"
         for user in range(len(USERS)):
-            if userId != USERS[user]["user_id"]:
-                continue
-            user["role"] = "admin"
-            return "Attendant was promoted to admin!"
+            if userId == USERS[user]["user_id"]:
+                USERS[user]["role"] = "admin"
+                return "Attendant was promoted to admin!"
+        return "That user_id is not registered to any users!"
 
 
 class Product:
@@ -133,8 +133,9 @@ class Product:
             })
             product_id += 1
             return "New product added!"
-        return "Check product details before adding to inventory!"
+        return self.validate_products(product_details)
     def get_products(self):
+        """fetch all available products in inventory if any!"""
         if not INVENTORY:
             return "There are no products in inventory!"
         return INVENTORY
@@ -143,9 +144,9 @@ class Product:
         if isinstance(productId, int) is False:
             return "product id should be a number"
         for product in range(len(INVENTORY)):
-            if productId != INVENTORY[product]["product_id"]:
-                continue
-            return INVENTORY[product]
+            if productId == INVENTORY[product]["product_id"]:
+                return INVENTORY[product]
+        return "That product_id is not registered to any products!"
     def edit_category(self, edit):
         """Change product category"""
         if not edit:
@@ -153,10 +154,10 @@ class Product:
         if edit["category"] not in CATEGORY:
             return "Items of that category are not present in store!"
         for product in range(len(INVENTORY)):
-            if edit["name"] != INVENTORY[product]["product_name"]:
-                continue
-            INVENTORY[product]["product_category"] = edit["category"]
-            return "Category changed to ", edit["category"]
+            if edit["name"] == INVENTORY[product]["product_name"]:
+                INVENTORY[product]["product_category"] = edit["category"]
+                return "Category changed to ", edit["category"]
+        return "That product is not present in Inventory!"
     def edit_cost(self, edit):
         """Change product cost"""
         if not edit:
@@ -164,10 +165,21 @@ class Product:
         if isinstance(edit["cost"], int) is False:
             return "Currencies should be numbers!"
         for product in range(len(INVENTORY)):
-            if edit["name"] != INVENTORY[product]["product_name"]:
-                continue
-            INVENTORY[product]["product_unit_cost"] = edit["cost"]
-            return "Unit cost changed to ", edit["cost"]
+            if edit["name"] == INVENTORY[product]["product_name"]:
+                INVENTORY[product]["product_unit_cost"] = edit["cost"]
+                return "Unit cost changed to ", edit["cost"]
+        return "That product is not present in Inventory!"
+    def edit_quantity(self, edit):
+        """Change an product quantity"""
+        if not edit:
+            return "Enter product name and quantity of items to add!"
+        if isinstance(edit["quantity"], int) is False:
+            return "Product quantities should be numbers!"
+        for product in range(len(INVENTORY)):
+            if edit["name"] == INVENTORY[product]["product_name"]:
+                INVENTORY[product]["product_unit_cost"] = INVENTORY[product]["product_unit_cost"] + edit["quantity"]
+                return edit["quantity"],"Products added!"
+        return "That product is not present in Inventory!"
 
 
 class Sale(Product):
@@ -217,25 +229,24 @@ class Sale(Product):
         if isinstance(saleId, int) is False:
             return "Sale_id should be a number!"
         for sale in range(len(SALES)):
-            if saleId != SALES[sale]["sale_id"]:
-                continue
-            return SALES[sale]
+            if saleId == SALES[sale]["sale_id"]:
+                return SALES[sale]
+        return "That sale_id is not registered to any sale record!"
     def get_attendant_sales(self, attendant):
         """Fetch all sales per attendant"""
         if not SALES:
             return "There are no sales currently!"
+        attendant_sales = []
         for sale in range(len(SALES)):
-            if attendant != SALES[sale]["attendant"]:
-                continue
-            return SALES[sale]
+            if attendant == SALES[sale]["attendant"]:
+                attendant_sales.append(SALES[sale])
+        return attendant_sales
     def get_attendant_specific_sale(self, my_sale_id, name):
         """Fetch specific sale report for specific attendant"""
         if not SALES:
             return "There are no sale records saved yet?!"
-        for sale in range(len(SALES)):
-            if SALES[sale]["sale_id"] != my_sale_id:
-                return "That sale record doesnt exist!"
-            for item in SALES[sale]:
-                if item["attendant"] != name:
-                    continue
-                return item
+        attendant_sales = self.get_attendant_sales(name)
+        for i in range(len(attendant_sales)):
+            if my_sale_id == attendant_sales[i]["sale_id"]:
+                return attendant_sales[i]
+        return "You don't have any sales with that id!"
