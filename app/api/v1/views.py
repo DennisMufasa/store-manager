@@ -9,115 +9,152 @@ user = models.User()
 sale = models.Sale()
 # routes
 @v1_blueprint.route('/products', methods=['GET', 'POST'])
-def get_products():
+def products():
     """get all products and add a new product if user == attendant"""
-    # if not session.get("logged_in"):
-    #     return make_response(jsonify({
-    #         "Message": "You are not logged in!"
-    #     }))
+    if not session.get("logged_in"):
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }), 403)
     if request.method == 'GET':
+        if isinstance(sale.get_products(), str):
+            return make_response(jsonify({
+                "Message": "No products stored in inventory!"
+            }), 204)
         return make_response(jsonify({
             "Message": sale.get_products()
-        }))
+        }), 200)
     if session["username"] != "admin":
         return make_response(jsonify({
             "Message": "You are not an admin!"
-        }))
+        }), 401)
     request_data = request.get_json()
     return make_response(jsonify({
         "Message": sale.add_product(request_data)
-    }))
+    }), 201)
 @v1_blueprint.route('/products/<int:productId>')
-def get_one_product(productId):
+def fetch_one_product(productId):
     """Fetch a specific product using its id"""
-    # if not session.get("logged_in"):
-    #     return make_response(jsonify({
-    #         "Message": "You are not logged in!"
-    #     }))
+    if not session.get("logged_in"):
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }), 403)
+    if isinstance(sale.get_one_product(productId), str):
+        return make_response(jsonify({
+            "Message": "Product not found"
+        }), 204)
     return make_response(jsonify({
         "Message": sale.get_one_product(productId)
     }), 200)
 @v1_blueprint.route('/sales', methods=['GET', 'POST'])
 def get_sales():
     """Fetch all sales else post a new sale record if an attendant"""
-    # if not session.get("logged_in"):
-    #     return make_response(jsonify({
-    #         "Message": "You are not logged in!"
-    #     }))
+    if not session.get("logged_in"):
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }), 403)
     if session["username"] != "admin" and request.method == 'POST':
         request_data = request.get_json()
         request_data["username"] = session["username"]
+        if sale.create_sale(request_data) != "New sale record created!":
+            return make_response(jsonify({
+                "Message": "Invalid product details!"
+            }), 406)
         return make_response(jsonify({
             "Message": sale.create_sale(request_data)
-        }))
+        }), 201)
     elif session["username"] != "admin":
+        if isinstance(sale.get_attendant_sales(session["username"]), str):
+            return make_response(jsonify({
+                "Message": "You don't have any sale records!"
+            }), 204)
         return make_response(jsonify({
             "Message": sale.get_attendant_sales(session["username"])
-        }))
+        }), 200)
     elif session["username"] == "admin":
+        if isinstance(sale.get_sales(), str):
+            return make_response(jsonify({
+                "Message": "There are no sale record created!"
+            }), 204)
         return make_response(jsonify({
             "Message": sale.get_sales()
-        }))
+        }), 200)
 @v1_blueprint.route('/sales/<int:saleId>')
 def get_one_sale(saleId):
     """Fetch a specif sale record"""
-    # if not session.get("logged_in"):
-    #     return make_response(jsonify({
-    #         "Message": "You are not logged in!"
-    #     }))
+    if not session.get("logged_in"):
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }), 403)
     if session["username"] != "admin":
+        if isinstance(
+            sale.get_attendant_specific_sale(saleId, session["username"]), str):
+            return make_response(jsonify({
+                "Message": "No sale records available with that id!"
+            }), 204)
         return make_response(jsonify({
             "Message": sale.get_attendant_specific_sale(saleId, session["username"])
-        }))
+        }), 200)
+    if isinstance(sale.get_one_sale(saleId), str):
+        return make_response(jsonify({
+            "Message": "No sale records available with that id!"
+        }), 204)
     return make_response(jsonify({
         "Message": sale.get_one_sale(saleId)
-    }))
+    }), 200)
 @v1_blueprint.route('/login', methods=['POST'])
 def login():
     """Login users into their accounts"""
-    # if session.get("logged_in") is None:
-    request_data = request.get_json()
-    if user.validate_user(request_data) == "Log in successful!":
-        # session["logged_in"] = True
-        session["username"] = request_data["username"]
+    if not session.get("logged_in"):
+        request_data = request.get_json()
+        if user.validate_user(request_data) == "validate successful":
+            session["logged_in"] = True
+            session["username"] = request_data["username"]
+            return make_response(jsonify({
+                "Message":  "Login Successful!"
+            }), 202)
         return make_response(jsonify({
-            "Message":  "Login Successful!"
-        }))
+            "Message": "Log in failed! Check your credentials!"
+        }), 401)
     return make_response(jsonify({
-        "Message": "Log in failed! Check your credentials!"
-    }))
-    # return make_response(jsonify({
-    #     "Message": "You are already logged in!"
-    # }))
+        "Message": "You have to log out first!"
+    }), 403)
 @v1_blueprint.route('/signup', methods=['POST'])
 def admin_add_user():
     """Admin can add a new attendant"""
-    # if not session.get("logged_in"):
-    #     return make_response(jsonify({
-    #         "Message": "You are not logged in!"
-    #     }))
+    if not session.get("logged_in"):
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }), 403)
     if session["username"] != "admin":
         return make_response(jsonify({
             "Message": "You are not an admin!"
-        }))
+        }), 403)
     request_data = request.get_json()
+    if user.add_user(request_data) != "User added Successfully!":
+        return make_response(jsonify({
+            "Message": user.add_user(request_data)
+        }), 406)
     return make_response(jsonify({
         "Message": user.add_user(request_data)
-    }))
+    }), 201)
 @v1_blueprint.route('/logout')
 def logout():
-    # if not session.get("logged_in"):
-    #     return "You are not logged in!"
-    # session["logged_in"] = False
-    session["username"] = ""
-    return "Logged out Successfully!"
+    if not session.get("logged_in"):
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }), 403)
+    session["logged_in"] = False
+    session["username"] = None
+    return make_response(jsonify({
+        "Message": "Logged out Successfully!"
+    }), 202)
 @v1_blueprint.route('/edit/category', methods=['PUT'])
 def edit_category():
     """Admin edit a product category"""
-    # if not session.get("logged_in"):
-    #     return make_response(jsonify({
-    #         "Message": "You are not logged in!"
-    #     }))
+    if not session.get("logged_in"):
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }))
     if session["username"] != "admin":
         return "you are not an admin!"
     request_data = request.get_json()
@@ -127,10 +164,10 @@ def edit_category():
 @v1_blueprint.route('/edit/cost', methods=['PUT'])
 def edit_cost():
     """Admins edit a product's unit cost"""
-    # if not session.get("logged_in"):
-    #     return make_response(jsonify({
-    #         "Message": "You are not logged in!"
-    #     }))
+    if not session.get("logged_in"):
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }))
     if session["username"] != "admin":
         return make_response(jsonify({
             "Message": "you are not an admin"
@@ -142,10 +179,10 @@ def edit_cost():
 @v1_blueprint.route('/edit/quantity', methods=['PUT'])
 def edit_product_quantity():
     """admin can add a product quantity"""
-    # if not session.get("logged_in"):
-    #     return make_response(jsonify({
-    #         "Message": "You are not logged in!"
-    #     }))
+    if not session.get("logged_in"):
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }))
     if session["username"] != "admin":
         return make_response(jsonify({
             "Message": "You are not an admin!"
@@ -157,10 +194,10 @@ def edit_product_quantity():
 @v1_blueprint.route('/edit/<user_id>', methods=['PUT'])
 def edit_user_role(user_id):
     """An admin can make an attendant an admin"""
-    # if not session.get("logged_in"):
-    #     return make_response(jsonify({
-    #         "Message": "You are not logged in!"
-    #     }))
+    if not session.get("logged_in"):
+        return make_response(jsonify({
+            "Message": "You are not logged in!"
+        }))
     if session["username"] != "admin":
         return make_response(jsonify({
             "Message": "You are not an admin!"

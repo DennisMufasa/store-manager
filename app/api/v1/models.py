@@ -37,6 +37,8 @@ class User:
                 return "That email is already registered!"
         if credentials["role"]!="admin" and credentials["role"] != "attendant":
             return "Roles are that of the admin and attendant only!"
+        if len(credentials["password"]) < 6:
+            return "Password too short! make it at least 6 chars log."
         return True
     def add_user(self, credentials):
         """Create a new user"""
@@ -82,7 +84,7 @@ class User:
             return "No useres registered. Consult admin for assistance!"
         for user in range(len(USERS)):
             if USERS[user]["username"] == credentials["username"] and USERS[user]["password"] == credentials["password"]:
-                return "Log in successful!"
+                return "validate successful"
         return "Invalid Credentials"
     def edit_user_role(self, userId):
         """Admin changes attendant role to admin"""
@@ -109,6 +111,8 @@ class Product:
     @staticmethod
     def validate_products(product_details):
         """Check validity of product details"""
+        if not product_details:
+            return "Enter product details to save"
         if product_details["quantity"] < 5:
             return "Store requires at least five products of every type!"
         if product_details["category"] not in CATEGORY:

@@ -1,12 +1,12 @@
 """Configuration for tests"""
 # third-party import
 import pytest
-from flask import session
-# local import
+import unittest2
+# local imports
 from app.api import create_app
-# fixture
+# fixtures
 @pytest.fixture
-def app():
+def app(self):
+    """app factory generating an instance of app for testing"""
     app = create_app('testing')
-    app.debug = True
     return app
