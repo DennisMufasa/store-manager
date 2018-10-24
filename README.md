@@ -56,5 +56,5 @@ Assuming you have created you won virtual environment by `python3 -m venv env`, 
         Pass user_id as a request parameter at `/api/v1/edit/<int:user_id>
 
 
-###NB. All headers contain `Content-type` set to `application/json`.
+### NB: All headers contain `Content-type` set to `application/json`.
 ###    Get the documentation from <a href="https://documenter.getpostman.com/view/3964097/RWgwQaqV">here</a>
