@@ -30,25 +30,24 @@ class User:
         """Check user crednetials for anomalies before registration"""
         if not credentials:
             return "Enter data for the server to process!"
+        if len(credentials) != 4:
+            return "Ensure attendant details include their email, username, password, role"
         if  bool(re.search(r'@', credentials["email"])) is False:
             return "Your email should have an @ somewhere!"
-        for user in range(len(USERS)):
-            if USERS[user]["email"] == credentials["email"]:
-                return "That email is already registered!"
         if credentials["role"]!="admin" and credentials["role"] != "attendant":
             return "Roles are that of the admin and attendant only!"
         if len(credentials["password"]) < 6:
-            return "Password too short! make it at least 6 chars log."
-        return True
+            return "Password too short! make it at least 6 chars log."        
+        for user in range(len(USERS)):
+            if USERS[user]["email"] == credentials["email"]:
+                return "That email is already registered!"
+        return "Details are ok!"
     def add_user(self, credentials):
         """Create a new user"""
         # global variable
         global user_id
-        # check credentials for data
-        if not credentials:
-            return "Enter some data for the server to process!"
         # check validity of data
-        if self.valiadte_credentials(credentials) is True:
+        if self.valiadte_credentials(credentials) == "Details are ok!":
             self.email = credentials["email"]
             self.username = credentials["username"]
             self.password = credentials["password"]
@@ -113,14 +112,16 @@ class Product:
         """Check validity of product details"""
         if not product_details:
             return "Enter product details to save"
+        if len(product_details) !=4:
+            return "Ensure attendant details include their email, username, password, role"
         if product_details["quantity"] < 5:
             return "Store requires at least five products of every type!"
         if product_details["category"] not in CATEGORY:
             return "Store doesn't sell that category of items!"
-        return True
+        return "Details are ok!"
     def add_product(self, product_details):
         """Add a new product"""
-        if self.validate_products(product_details) is True:
+        if self.validate_products(product_details) == "Details are ok!":
             global product_id
             self.name = product_details["product_name"]
             self.category = product_details["category"]
@@ -181,7 +182,9 @@ class Product:
             return "Product quantities should be numbers!"
         for product in range(len(INVENTORY)):
             if edit["name"] == INVENTORY[product]["product_name"]:
-                INVENTORY[product]["product_unit_cost"] = INVENTORY[product]["product_unit_cost"] + edit["quantity"]
+                INVENTORY[product]["product_unit_cost"] = (
+                    INVENTORY[product]["product_unit_cost"] + edit["quantity"]
+                )
                 return edit["quantity"],"Products added!"
         return "That product is not present in Inventory!"
 
@@ -192,35 +195,48 @@ class Sale(Product):
     def __init__(self):
         """class constructor"""
         Product.__init__(self)
+    @staticmethod
+    def validate_sale(sale_details):
+        """validate sale details before recording them"""
+        if not sale_details:
+            return "Enter data for the server to process!"
+        if len(sale_details) != 3:
+            return "Ensure to include product details and quantity!"
+        if isinstance(sale_details["quantity"], int) is False and sale_details["quantity"] == 0 or None:
+            return "Repremand!!!What are you doing!"
+        return "Sale detail are ok!"
     def create_sale(self, sale_details):
         """creating a new sale"""
-        if not sale_details:
-            return "Enter sale details to save!"
-        #global variable
-        global sale_id
-        if not INVENTORY:
-            return "There are no products in inventory!"
-        if isinstance(sale_details["quantity"], int) is False and sale_details["quantity"] == 0:
-            return "Make sure quantity is sensible!"
-        for product in range(len(INVENTORY)):
-            if sale_details["product_name"] != INVENTORY[product]["product_name"]:
-                continue
-            if INVENTORY[product]["product_quantity"] - sale_details["quantity"] <= 4:
-                return "That product is currently out of stock!"
-            bill = INVENTORY[product]["product_unit_cost"] * sale_details["quantity"]
-            date = datetime.datetime.now()
-            formatted_date = date.strftime("%c")
-            SALES.append({
-                "sale_id": sale_id,
-                "attendant": sale_details["username"],
-                "product": sale_details["product_name"],
-                "quantity": sale_details["quantity"],
-                "Bill": bill,
-                "Date": formatted_date
-                })
-            sale_id += 1
-            INVENTORY[product]["product_quantity"] = INVENTORY[product]["product_quantity"] - sale_details["quantity"]
+        if self.validate_sale(sale_details) == "Sale detail are ok!":
+            #global variable
+            global sale_id
+            if not INVENTORY:
+                return "There are no products in inventory!"
+            for product in range(len(INVENTORY)):
+                if sale_details["product_name"] != INVENTORY[product]["product_name"]:
+                    continue
+                if INVENTORY[product]["product_quantity"] - sale_details["quantity"] <= 4:
+                    return "That product is currently out of stock!"
+                bill = INVENTORY[product]["product_unit_cost"] * sale_details["quantity"]
+                date = datetime.datetime.now()
+                formatted_date = date.strftime("%c")
+                SALES.append({
+                    "sale_id": sale_id,
+                    "attendant": sale_details["username"],
+                    "product": sale_details["product_name"],
+                    "quantity": sale_details["quantity"],
+                    "Bill": bill,
+                    "Date": formatted_date
+                    })
+                sale_id += 1
+                INVENTORY[product]["product_quantity"] = (
+                    INVENTORY[product]["product_quantity"] - sale_details["quantity"]
+                )
+                INVENTORY[product]["product_total_worth"] = (
+                    INVENTORY[product]["product_quantity"] * INVENTORY[product]["product_unit_cost"]
+                )
             return "New sale record created!"
+        return self.validate_sale(sale_details)
     def get_sales(self):
         """get all sale records"""
         if not SALES:

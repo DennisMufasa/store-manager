@@ -19,7 +19,7 @@ def products():
         if isinstance(sale.get_products(), str):
             return make_response(jsonify({
                 "Message": "No products stored in inventory!"
-            }), 204)
+            }), 404)
         return make_response(jsonify({
             "Message": sale.get_products()
         }), 200)
@@ -41,12 +41,12 @@ def fetch_one_product(productId):
     if isinstance(sale.get_one_product(productId), str):
         return make_response(jsonify({
             "Message": "Product not found"
-        }), 204)
+        }), 404)
     return make_response(jsonify({
         "Message": sale.get_one_product(productId)
     }), 200)
 @v1_blueprint.route('/sales', methods=['GET', 'POST'])
-def get_sales():
+def sales():
     """Fetch all sales else post a new sale record if an attendant"""
     if not session.get("logged_in"):
         return make_response(jsonify({
@@ -60,21 +60,29 @@ def get_sales():
                 "Message": "Invalid product details!"
             }), 406)
         return make_response(jsonify({
-            "Message": sale.create_sale(request_data)
+            "Message": "New sale record created!"
         }), 201)
     elif session["username"] != "admin":
         if isinstance(sale.get_attendant_sales(session["username"]), str):
             return make_response(jsonify({
                 "Message": "You don't have any sale records!"
-            }), 204)
+            }), 404)
         return make_response(jsonify({
             "Message": sale.get_attendant_sales(session["username"])
         }), 200)
+    elif session["username"] == "admin" and request.method == 'POST':
+        # if isinstance(sale.get_sales(), str):
+        #     return make_response(jsonify({
+        #         "Message": "There are no sale record created!"
+        #     }), 404)
+        return make_response(jsonify({
+            "Message": "As an admin we figured yud have better things to do!"
+        }), 403)
     elif session["username"] == "admin":
         if isinstance(sale.get_sales(), str):
             return make_response(jsonify({
-                "Message": "There are no sale record created!"
-            }), 204)
+                "Message": sale.get_sales()
+            }), 404)
         return make_response(jsonify({
             "Message": sale.get_sales()
         }), 200)
@@ -90,14 +98,14 @@ def get_one_sale(saleId):
             sale.get_attendant_specific_sale(saleId, session["username"]), str):
             return make_response(jsonify({
                 "Message": "No sale records available with that id!"
-            }), 204)
+            }), 404)
         return make_response(jsonify({
             "Message": sale.get_attendant_specific_sale(saleId, session["username"])
         }), 200)
     if isinstance(sale.get_one_sale(saleId), str):
         return make_response(jsonify({
             "Message": "No sale records available with that id!"
-        }), 204)
+        }), 404)
     return make_response(jsonify({
         "Message": sale.get_one_sale(saleId)
     }), 200)
@@ -130,13 +138,13 @@ def admin_add_user():
             "Message": "You are not an admin!"
         }), 403)
     request_data = request.get_json()
-    if user.add_user(request_data) != "User added Successfully!":
+    if user.add_user(request_data) == "User added Successfully!":
         return make_response(jsonify({
-            "Message": user.add_user(request_data)
-        }), 406)
+            "Message": "New attendant added!"
+        }), 201)
     return make_response(jsonify({
-        "Message": user.add_user(request_data)
-    }), 201)
+        "Message": user.valiadte_credentials(request_data)
+    }), 406)
 @v1_blueprint.route('/logout')
 def logout():
     if not session.get("logged_in"):
