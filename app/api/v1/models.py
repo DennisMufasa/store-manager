@@ -141,6 +141,8 @@ class Product:
             return "Store doesn't sell that category of items!"
         if product_details["product_name"] == "":
             return "Can't enter product without a name!"
+        if product_details["product_unit_cost"] == 0:
+            return "The product unit cost cannot be 0"
         if product_details["product_unit_cost"] == "":
             return "Product unit cost cannot be empty!"
         if isinstance(product_details["product_unit_cost"], int) is False:
@@ -241,11 +243,11 @@ class Sale(Product):
             return "What are you doing! Quantity should be a number!"
         if not INVENTORY:
             return "There are no products in inventory!"
-        for product in range(len(INVENTORY)):
-            if sale_details["product_name"] not in INVENTORY[product].values():
-                return "That product is not sold here!"
-            if INVENTORY[product]["product_quantity"] - sale_details["quantity"] <= 4:
-                return "That product is currently out of stock!"
+        # for product in range(len(INVENTORY)):
+        #     if sale_details["product_name"] != INVENTORY[product]["product_name"]:
+        #         return "That product is not sold here!"
+        #     if INVENTORY[product]["product_quantity"] - sale_details["quantity"] <= 4:
+        #         return "That product is currently out of stock!"
         return "Sale detail are ok!"
     def create_sale(self, sale_details):
         """creating a new sale"""

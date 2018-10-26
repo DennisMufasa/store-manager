@@ -1,19 +1,26 @@
 # """Tests for vesrion 1 of store-manager APIs"""
+# system imports
+import os
+import sys
+app_dir = os.path.abspath(os.path.join(os.path.realpath(__file__), '../../../..'))
+sys.path.append(app_dir)
 # # third-party import
 import pytest
 import unittest
 import json
 # local import
 from app.api import create_app
+app = create_app('testing')
 class Base_Test_class(unittest.TestCase):
     """Class holding configurations for testing"""
     def create_app(self):
         """create app to test"""
-        app = create_app('testing')
+        # app = create_app('testing')
         return app
     def setup(self):
         """set up an instance of the app for testing"""
-        self.app = self.create_app()
+        self.app = app
+        self.client = self.app.test_client
         self.app.testing = True
         self.context = self.app.app_context()
         self.context.push()
@@ -29,7 +36,7 @@ class Test_product_views(Base_Test_class):
     #     Base_Test_class.__init__(self)
     def test_products(self):
         """test get all products endpoint when not logged in"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 response = client.get('/api/v1/products')
                 self.assertIsNone(session.get("logged_in"))
@@ -38,7 +45,7 @@ class Test_product_views(Base_Test_class):
                 self.assertEqual(response.json["Message"], "You are not logged in!")
     def test_products_logged_in(self):
         """test fetch products when no products saved in inventory"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 session["logged_in"] = True
                 response = client.get('/api/v1/products')
@@ -48,7 +55,7 @@ class Test_product_views(Base_Test_class):
                 self.assertEqual(response.json["Message"], "There are no products in inventory!")
     def test_add_product(self):
         """test add a new product enpoint for a logged in admin"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 session["logged_in"] = True
                 session["username"] = "admin"
@@ -64,7 +71,7 @@ class Test_product_views(Base_Test_class):
                 self.assertEqual(response.json["Message"], "New product added!")
     def test_attendant_add_product(self):
         """test add a new product enpoint for an attendant"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 session["logged_in"] = True
                 session["username"] = "attendant"
@@ -80,7 +87,7 @@ class Test_product_views(Base_Test_class):
                 self.assertEqual(response.json["Message"], "You are not an admin!")                
     def test_get_one_product(self):
         """test get one client endpoint while not logged in"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 response = client.get('/api/v1/products/5')
                 self.assertIsNone(session.get("logged_in"))
@@ -89,7 +96,7 @@ class Test_product_views(Base_Test_class):
                 self.assertEqual(response.json["Message"], "You are not logged in!")
     def test_get_one_product_loggedIn(self):
         """test fetch specific sale when logged in"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 session["logged_in"] = True
                 response = client.get('/api/v1/product/1')
@@ -106,7 +113,7 @@ class Test_Sales_views(Base_Test_class):
     #     Base_Test_class.__init__(self)
     def test_get_sales(self):
         """test get all sales endpoint when not logged in"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 response = client.get('/api/v1/sales')
                 self.assertIsNone(session.get("logged_in"))
@@ -115,7 +122,7 @@ class Test_Sales_views(Base_Test_class):
                 self.assertTrue(response.json["Message"], "You are not logged in!")
     def test_get_sales_loggedin_admin(self):
         """fetch all sales records for users if logged in as admin"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 session["logged_in"] = True
                 session["username"] = "admin"
@@ -126,7 +133,7 @@ class Test_Sales_views(Base_Test_class):
                 self.assertTrue(response.json["Message"], "No sales records have been created!")
     def test_get_one_sale(self):
         """Test get one sale endpoint if logged in as attendant"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 session["logged_in"] = True
                 session["username"] = "attendant"
@@ -137,7 +144,7 @@ class Test_Sales_views(Base_Test_class):
                 self.assertEqual(response.json["Message"], "There are no sale records saved yet?!")
     def test_add_sale(self):
         """Test make sale report endpoint before logging in for attendant"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 response = client.post('/api/v1/sales', data={
                     "attendant": "mufasa",
@@ -150,7 +157,7 @@ class Test_Sales_views(Base_Test_class):
                 self.assertEqual(response.json["Message"], "You are not logged in!")
     def test_add_sale_loggedIn(self):
         """Test make sale report endpoint after logging as an attendant"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 session["logged_in"] = True
                 session["username"] = "wewe"
@@ -165,7 +172,7 @@ class Test_Sales_views(Base_Test_class):
                 self.assertEqual(response.json["Message"], "There are no products in inventory!")                
     def test_login(self):
         """test login endpoint"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 response = client.post('/api/v1/login', data={
                     "username": "admin",
@@ -177,7 +184,7 @@ class Test_Sales_views(Base_Test_class):
                 self.assertEqual(response.json["Message"], "Loggin Successful!")
     def test_signup(self):
         """test signup endpoint adds users to the app"""
-        with self.app.test_client() as client:
+        with self.client as client:
             with client.session_transaction() as session:
                 session["logged_in"] = True
                 session["username"] = "admin"

@@ -25,7 +25,7 @@ def products():
                 }))
             return make_response(jsonify({
                 "Message": sale.validate_products(request_data)
-            }), 409)
+            }), 400)
         return make_response(jsonify({
             "Message": "You are not an admin!"
         }), 403)
@@ -90,7 +90,7 @@ def sales():
             }), 404)
         return make_response(jsonify({
             "Message": sale.validate_sale(request_data)
-        }), 409)
+        }), 400)
     if session["username"] == "admin":
         if isinstance(sale.get_sales(), str) is True:
             return make_response(jsonify({
@@ -177,10 +177,10 @@ def login():
             }), 200)
             return make_response(jsonify({
                 "Message": "Invalid Credentials!"
-            }), 409)
+            }), 400)
         return make_response(jsonify({
             "Message": user.validate_user(request_data)
-        }), 409)
+        }), 400)
     return make_response(jsonify({
         "Message": "You have to log out first!"
     }), 403)
@@ -202,7 +202,7 @@ def admin_add_user():
         }), 201)
     return make_response(jsonify({
         "Message": user.valiadte_credentials(request_data)
-    }), 409)
+    }), 400)
 @v1_blueprint.route('/logout')
 def logout():
     if not session.get("logged_in"):
