@@ -10,7 +10,9 @@ def create_app(config):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(configuration[config])
     app.secret_key = os.urandom(24)
-    # register blueprint
-    from .v1 import v1_blueprint
+    # register blueprints
+    from . v1 import v1_blueprint
+    from . v2 import v2_blueprint
     app.register_blueprint(v1_blueprint)
+    app.register_blueprint(v2_blueprint)
     return app
